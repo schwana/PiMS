@@ -1,5 +1,6 @@
 import sys
 import time
+import os
 
 from PyQt4 import QtCore, QtGui
 from time import strftime
@@ -19,7 +20,7 @@ except RuntimeError:
 
 
 class MyForm(QtGui.QMainWindow):
-    
+
 
     def __init__(self, parent=None):
       QtGui.QWidget.__init__(self, parent)
@@ -33,17 +34,17 @@ class MyForm(QtGui.QMainWindow):
       #Initialise Temperature Updater
       self.timer1 = QtCore.QTimer(self)
       self.timer1.timeout.connect(self.UpdateTemperature)
-      self.timer1.start(10000)      
+      self.timer1.start(10000)
       #Update Tank Numbers (shot numbers)
       self.UpdateTankNumbers()
       #Initialise the valves
       self.InitValves()
-      #Initialise the various buttons      
+      #Initialise the various buttons
       self.InitButtons()
       self.disableValveButtons()
 
 ## -------------- INITIALISATION ----------------##
-      
+
 
     def InitButtons(self):
         #Getter Dial
@@ -80,7 +81,6 @@ class MyForm(QtGui.QMainWindow):
         cur = self.ui.spinBoxHole.value()
         cur = cur-1
         self.ui.spinBoxHole.setValue(cur)
-       
 
     def AutoPushed(self):
         #CHANGE THIS SO THAT PRESSING THE BUTTON ENABLES/DISABLES THE VALVE BUTTONS
@@ -191,7 +191,7 @@ class MyForm(QtGui.QMainWindow):
         self.ui.v12.setEnabled(True)
         self.ui.v13.setEnabled(True)
 
-      
+
     def btn1Push(self):
         #check if v2 is open
         if self.ui.v2.isChecked():
@@ -201,7 +201,7 @@ class MyForm(QtGui.QMainWindow):
              self.v1open()
          else:
             self.v1close()
-       
+
     def btn2Push(self):
         if self.ui.v1.isChecked():
          self.ui.v2.setChecked(False)
@@ -220,7 +220,7 @@ class MyForm(QtGui.QMainWindow):
             self.v3open()
          else:
             self.v3close()
-            
+
 
     def btn4Push(self):
         #check if v3 is open
@@ -698,22 +698,25 @@ class MyForm(QtGui.QMainWindow):
         self.ui.lblProcess.setText("Close Ion Pump")   
         #Close v6
         self.v6close()    
-        #Open v8    
-        self.v8open()
-        self.ui.lblProcess.setText("Inlet")
-        #wait then start quad
-        for x in range(0, 60):
-            self.ui.progressLabel.setText("Time %d" % (x))
-            time.sleep(1)
-            QtGui.qApp.processEvents()
 
 
     def QuadMeaure(self):
-        self.ui.lblProcess.setText("Start Measurement")
-        for x in range(0, 60):
-            self.ui.progressLabel.setText("Time %d" % (x))
-            time.sleep(1)
-            QtGui.qApp.processEvents()
+        #Open v8 - Inlet   
+        self.v8open()
+        self.ui.lblProcess.setText("Inlet and Measure")
+        #wait then start quad
+#        for x in range(0, 60):
+#            self.ui.progressLabel.setText("Time %d" % (x))
+#            time.sleep(1)
+        QtGui.qApp.processEvents()
+
+#        self.ui.lblProcess.setText("Start Measurement")
+        os.system("python SRSqRead.py")
+        self.ui.lblProcess.setText("End Measurement")
+    #    for x in range(0, 60):
+    #        self.ui.progressLabel.setText("Time %d" % (x))
+    #        time.sleep(1)
+        QtGui.qApp.processEvents()
 
     def LineCleanUp(self):
         self.ui.lblProcess.setText("Clean Up")    
