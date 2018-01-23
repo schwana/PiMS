@@ -25,7 +25,7 @@ except AttributeError:
 class Ui_QuadCTRL(object):
     def setupUi(self, QuadCTRL):
         QuadCTRL.setObjectName(_fromUtf8("QuadCTRL"))
-        QuadCTRL.resize(800, 480)
+        QuadCTRL.resize(927, 575)
         QuadCTRL.setMinimumSize(QtCore.QSize(800, 480))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
@@ -1189,7 +1189,14 @@ class Ui_QuadCTRL(object):
         self.line_25.setObjectName(_fromUtf8("line_25"))
         QuadCTRL.setCentralWidget(self.centralWidget)
         self.menuBar = QtGui.QMenuBar(QuadCTRL)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 800, 19))
+        self.menuBar.setEnabled(True)
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 927, 20))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.menuBar.sizePolicy().hasHeightForWidth())
+        self.menuBar.setSizePolicy(sizePolicy)
+        self.menuBar.setMinimumSize(QtCore.QSize(927, 20))
         self.menuBar.setObjectName(_fromUtf8("menuBar"))
         QuadCTRL.setMenuBar(self.menuBar)
 

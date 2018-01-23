@@ -26,7 +26,7 @@ class MyForm(QtGui.QMainWindow):
       QtGui.QWidget.__init__(self, parent)
       self.ui = Ui_QuadCTRL()
       self.ui.setupUi(self)
-      self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+      #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
       #Initialise Clock
       self.timer = QtCore.QTimer(self)
       self.timer.timeout.connect(self.Time)
