@@ -29,35 +29,47 @@ class SRSForm(QtGui.QMainWindow):
       self.tester = QtCore.QTimer(self)
       self.tester.timeout.connect(self.Test)
       self.tester.start()
-      
-      self.resize(800,800)
-      view = pg.GraphicsLayoutWidget()  ## GraphicsView with GraphicsLayout inserted by default
-      self.setCentralWidget(view)
 
-
-      w1 = view.addPlot()
-
-      
-      n = 100
-      s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 255, 255, 120))
-      pos = np.random.normal(size=(2,n), scale=1e-5)
-      spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
-      s1.addPoints(spots)
-      w1.addItem(s1)
-        
-      
-
-
-#    def Time(self):
-#        self.ui.lcdTime.display(strftime("%H"+":"+"%M"+":"+"%S"))
+    
 
     def Test(self):
 
-        for x in range(0, 10):
-            print("Time %d" % (x))
+        self.resize(600,600)
+        view = pg.GraphicsLayoutWidget()  ## GraphicsView with GraphicsLayout inserted by default
+        self.setCentralWidget(view)
+
+        w1 = view.addPlot()
+##        x =1
+##      
+##        n = 1
+##        s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 255, 255, 120))
+##        pos = np.random.normal(size=(2,n), scale=1e-5)
+##        
+##        print pos
+##        spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
+##
+##        s1.addPoints(spots)
+##        w1.addItem(s1)
+##        
+        n=10
+        j=0
+        for x in range(0, 5):
+            
+            s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 255, 255, 120))
+            pos = np.random.normal(size=(2,n), scale=1e-5)
+            spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
+            pos[0]=j
+            s1.addPoints(x=pos[0],y=pos[1])
+            #s1.addPoints(spots)
+            w1.addItem(s1)
+            j=j+1
+            print("Time %d" % (j))
             time.sleep(1)
             QtGui.qApp.processEvents()
+
+        time.sleep(5)  
         sys.exit()
+            
         
         
     
