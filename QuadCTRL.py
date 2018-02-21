@@ -26,7 +26,8 @@ class MyForm(QtGui.QMainWindow):
       QtGui.QWidget.__init__(self, parent)
       self.ui = Ui_QuadCTRL()
       self.ui.setupUi(self)
-      #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+      #Comment next line for frame
+#      self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
       #Initialise Clock
       self.timer = QtCore.QTimer(self)
       self.timer.timeout.connect(self.Time)
@@ -711,7 +712,7 @@ class MyForm(QtGui.QMainWindow):
         QtGui.qApp.processEvents()
 
 #        self.ui.lblProcess.setText("Start Measurement")
-        os.system("python ~/PiMS/DisplaySRS/SRSqRead.py")
+        os.system("python /home/pi/PiMS/DisplaySRS/SRSqRead.py")
         self.ui.lblProcess.setText("End Measurement")
     #    for x in range(0, 60):
     #        self.ui.progressLabel.setText("Time %d" % (x))
@@ -836,6 +837,7 @@ class MyForm(QtGui.QMainWindow):
         #show something running
         self.ui.runningButton.setStyleSheet("background-color: red")
         self.ui.runningButton.setChecked(True)
+        os.system("python /home/pi/PiMS/DisplaySRS/SRSqRead.py")
 
         #Change Button colour
         self.ui.lbButton.setStyleSheet("background-color: red")

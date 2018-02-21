@@ -2,6 +2,8 @@ import time
 import sys
 import pyqtgraph as pg
 import numpy as np
+import os
+
 
 from time import strftime
 
@@ -19,7 +21,7 @@ class SRSForm(QtGui.QMainWindow):
       #QtCore.QThread.__init__(self, parent)
       self.ui = Ui_displaySRS()
       self.ui.setupUi(self)
-      self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+      #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
       #Initialise Clock
  #     self.timer = QtCore.QTimer(self)
@@ -33,6 +35,8 @@ class SRSForm(QtGui.QMainWindow):
     
 
     def Test(self):
+
+        
 
         self.resize(600,600)
         view = pg.GraphicsLayoutWidget()  ## GraphicsView with GraphicsLayout inserted by default
@@ -51,23 +55,34 @@ class SRSForm(QtGui.QMainWindow):
 ##        s1.addPoints(spots)
 ##        w1.addItem(s1)
 ##        
-        n=10
+        n=1
+        time.sleep(1)
         j=0
-        for x in range(0, 5):
+        for x in range(0, 15):
+
+            #os.system("python /home/pi/PiMS/DisplaySRS/MeasureM40.py")
+            time.sleep(10)
+            fo = open("/home/pi/PiMS/DisplaySRS/M40.txt", "r")
+            line = fo.readline()
+            fo.close()
+            
+            uf=float(line)
             
             s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 255, 255, 120))
             pos = np.random.normal(size=(2,n), scale=1e-5)
             spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
             pos[0]=j
+            pos[1]=uf
             s1.addPoints(x=pos[0],y=pos[1])
-            #s1.addPoints(spots)
+            #s1.addPoints(uf)
             w1.addItem(s1)
+            
             j=j+1
             print("Time %d" % (j))
-            time.sleep(1)
+          
             QtGui.qApp.processEvents()
 
-        time.sleep(5)  
+        
         sys.exit()
             
         
