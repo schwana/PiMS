@@ -441,8 +441,8 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>11</y>
+      <x>0</x>
+      <y>41</y>
       <width>371</width>
       <height>321</height>
      </rect>
@@ -3357,8 +3357,8 @@
    <widget class="QDial" name="dialGetter">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>360</y>
+      <x>10</x>
+      <y>390</y>
       <width>91</width>
       <height>81</height>
      </rect>
@@ -3382,8 +3382,8 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>340</y>
+      <x>0</x>
+      <y>370</y>
       <width>121</width>
       <height>21</height>
      </rect>
@@ -3400,8 +3400,8 @@
    <widget class="QLabel" name="getterLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>440</y>
+      <x>10</x>
+      <y>470</y>
       <width>101</width>
       <height>20</height>
      </rect>
@@ -3416,8 +3416,8 @@
    <widget class="QPushButton" name="lbButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>340</y>
+      <x>130</x>
+      <y>370</y>
       <width>85</width>
       <height>51</height>
      </rect>
@@ -3429,8 +3429,8 @@
    <widget class="QLCDNumber" name="lcdTime">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>10</y>
+      <x>380</x>
+      <y>40</y>
       <width>141</width>
       <height>41</height>
      </rect>
@@ -3445,8 +3445,8 @@
    <widget class="QLabel" name="lblProcess">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>22</y>
+      <x>560</x>
+      <y>52</y>
       <width>141</width>
       <height>17</height>
      </rect>
@@ -3458,8 +3458,8 @@
    <widget class="QPushButton" name="stdButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>410</y>
+      <x>130</x>
+      <y>440</y>
       <width>85</width>
       <height>51</height>
      </rect>
@@ -3471,8 +3471,8 @@
    <widget class="QPushButton" name="sampleButton">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>340</y>
+      <x>250</x>
+      <y>370</y>
       <width>85</width>
       <height>51</height>
      </rect>
@@ -3484,8 +3484,8 @@
    <widget class="QPushButton" name="runningButton">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>18</y>
+      <x>530</x>
+      <y>48</y>
       <width>21</width>
       <height>27</height>
      </rect>
@@ -3500,8 +3500,8 @@
    <widget class="QCheckBox" name="checkBoxTest">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>10</y>
+      <x>690</x>
+      <y>40</y>
       <width>51</width>
       <height>22</height>
      </rect>
@@ -3516,8 +3516,8 @@
    <widget class="QLabel" name="progressLabel">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>50</y>
+      <x>530</x>
+      <y>80</y>
       <width>191</width>
       <height>17</height>
      </rect>
@@ -3529,8 +3529,8 @@
    <widget class="Line" name="line_24">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>70</y>
+      <x>380</x>
+      <y>100</y>
       <width>391</width>
       <height>16</height>
      </rect>
@@ -3542,8 +3542,8 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>89</y>
+      <x>390</x>
+      <y>119</y>
       <width>81</width>
       <height>17</height>
      </rect>
@@ -3555,8 +3555,8 @@
    <widget class="QSpinBox" name="spinBoxHole">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>85</y>
+      <x>480</x>
+      <y>115</y>
       <width>44</width>
       <height>27</height>
      </rect>
@@ -3568,8 +3568,8 @@
    <widget class="QPushButton" name="pushButtonHolePlus">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>85</y>
+      <x>540</x>
+      <y>115</y>
       <width>51</width>
       <height>27</height>
      </rect>
@@ -3581,8 +3581,8 @@
    <widget class="QPushButton" name="pushButtonHoleMinus">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>85</y>
+      <x>600</x>
+      <y>115</y>
       <width>51</width>
       <height>27</height>
      </rect>
@@ -3594,8 +3594,8 @@
    <widget class="Line" name="line_25">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>110</y>
+      <x>380</x>
+      <y>140</y>
       <width>391</width>
       <height>16</height>
      </rect>
