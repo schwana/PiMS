@@ -73,7 +73,15 @@ class MyForm(QtGui.QMainWindow):
       QtCore.QObject.connect(self.ui.pushButtonHolePlus,QtCore.SIGNAL("clicked()"),self.HolePlus)
        #Hole - Button 
       QtCore.QObject.connect(self.ui.pushButtonHoleMinus,QtCore.SIGNAL("clicked()"),self.HoleMinus)
+      #Table (Sample)
+      QtCore.QObject.connect(self.ui.tableWidgetSamples,QtCore.SIGNAL("cellClicked(int,int)"),self.SampleTable)
       
+
+
+    def SampleTable(self):
+        #nothing here yet
+        print("Table")
+        
     def HolePlus(self):        
         cur = self.ui.spinBoxHole.value()
         cur = cur+1

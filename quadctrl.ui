@@ -3719,6 +3719,11 @@
        <string>G</string>
       </property>
      </column>
+     <item row="0" column="0">
+      <property name="text">
+       <string>test</string>
+      </property>
+     </item>
     </widget>
     <widget class="QTableWidget" name="tableWidgetStandards1">
      <property name="geometry">
@@ -3794,12 +3799,6 @@
     </widget>
     <zorder>tableWidgetStandards1</zorder>
     <zorder>tableWidgetSamples</zorder>
-    <zorder>line_25</zorder>
-    <zorder>spinBoxHole</zorder>
-    <zorder>line_24</zorder>
-    <zorder>pushButtonHolePlus</zorder>
-    <zorder>label_11</zorder>
-    <zorder>pushButtonHoleMinus</zorder>
     <zorder>tableWidgetStandards2</zorder>
    </widget>
   </widget>
