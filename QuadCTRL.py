@@ -53,7 +53,7 @@ class MyForm(QtGui.QMainWindow):
       QtCore.QObject.connect(self.ui.dialGetter,QtCore.SIGNAL("valueChanged(int)"),self.dialGetterChange)
         #LineBlank Button
       QtCore.QObject.connect(self.ui.lbButton,QtCore.SIGNAL("clicked()"),self.LineBlank)
-      self.ui.lbButton.setStyleSheet("background-color: green")
+      self.ui.lbButton.setStyleSheet("background-color: green") 
         #Standard Button
       QtCore.QObject.connect(self.ui.stdButton,QtCore.SIGNAL("clicked()"),self.QShot)
       self.ui.stdButton.setStyleSheet("background-color: green")
@@ -65,7 +65,7 @@ class MyForm(QtGui.QMainWindow):
       self.ui.runningButton.setStyleSheet("background-color: green")
        #Auto/manual Button 
       QtCore.QObject.connect(self.ui.pushButtonAuto,QtCore.SIGNAL("clicked()"),self.AutoPushed)
-      self.ui.pushButtonAuto.setStyleSheet("background-color: red")
+      self.ui.pushButtonAuto.setStyleSheet("background-color: orange")
       #Test Check Box
       QtCore.QObject.connect(self.ui.checkBoxTest,QtCore.SIGNAL("stateChanged(int)"),self.TestBox)
       self.TestBox()
@@ -94,7 +94,7 @@ class MyForm(QtGui.QMainWindow):
             self.ui.pushButtonAuto.setText("Manual")
         else:
             self.disableValveButtons()
-            self.ui.pushButtonAuto.setStyleSheet("background-color: red")
+            self.ui.pushButtonAuto.setStyleSheet("background-color: orange")
             self.ui.pushButtonAuto.setText("Auto")
             
 
@@ -109,37 +109,37 @@ class MyForm(QtGui.QMainWindow):
               #Setup Valves (initially all OFF)     
         #Valve 1 - Q pipette (tank)
       QtCore.QObject.connect(self.ui.v1,QtCore.SIGNAL("clicked()"),self.btn1Push)
-      self.ui.v1.setStyleSheet("background-color: red")
+      self.ui.v1.setStyleSheet("background-color: orange")
         #Valve 2 - Q pipette (line)
       QtCore.QObject.connect(self.ui.v2,QtCore.SIGNAL("clicked()"),self.btn2Push)
-      self.ui.v2.setStyleSheet("background-color: red")
+      self.ui.v2.setStyleSheet("background-color: orange")
         #Valve 3 - Spike pipette (line)
       QtCore.QObject.connect(self.ui.v3,QtCore.SIGNAL("clicked()"),self.btn3Push)
-      self.ui.v3.setStyleSheet("background-color: red")
+      self.ui.v3.setStyleSheet("background-color: orange")
         #Valve 4 - Spike pipette (tank)
       QtCore.QObject.connect(self.ui.v4,QtCore.SIGNAL("clicked()"),self.btn4Push)
-      self.ui.v4.setStyleSheet("background-color: red")
+      self.ui.v4.setStyleSheet("background-color: orange")
         #Valve 6 - Ion Pump
       QtCore.QObject.connect(self.ui.v6,QtCore.SIGNAL("clicked()"),self.btn6Push)
-      self.ui.v6.setStyleSheet("background-color: red")
+      self.ui.v6.setStyleSheet("background-color: orange")
         #Valve 7 - Quad
       QtCore.QObject.connect(self.ui.v7,QtCore.SIGNAL("clicked()"),self.btn7Push)
-      self.ui.v7.setStyleSheet("background-color: red")
+      self.ui.v7.setStyleSheet("background-color: orange")
         #Valve 8 - Volume A
       QtCore.QObject.connect(self.ui.v8,QtCore.SIGNAL("clicked()"),self.btn8Push)
-      self.ui.v8.setStyleSheet("background-color: red")
+      self.ui.v8.setStyleSheet("background-color: orange")
         #Valve 10 - Laser Port
       QtCore.QObject.connect(self.ui.v10,QtCore.SIGNAL("clicked()"),self.btn10Push)
-      self.ui.v10.setStyleSheet("background-color: red")
+      self.ui.v10.setStyleSheet("background-color: orange")
         #Valve 11 - Hot Getter
       QtCore.QObject.connect(self.ui.v11,QtCore.SIGNAL("clicked()"),self.btn11Push)
-      self.ui.v11.setStyleSheet("background-color: red")
+      self.ui.v11.setStyleSheet("background-color: orange")
         #Valve 12 - Backing Pump
       QtCore.QObject.connect(self.ui.v12,QtCore.SIGNAL("clicked()"),self.btn12Push)
-      self.ui.v12.setStyleSheet("background-color: red")
+      self.ui.v12.setStyleSheet("background-color: orange")
         #Valve 13 - Turbo Pump
       QtCore.QObject.connect(self.ui.v13,QtCore.SIGNAL("clicked()"),self.btn13Push)
-      self.ui.v13.setStyleSheet("background-color: red")
+      self.ui.v13.setStyleSheet("background-color: orange")
 
     def UpdateTankNumbers(self):
         fo = open("Qnum.txt", "rw+")
@@ -302,7 +302,7 @@ class MyForm(QtGui.QMainWindow):
     def v1close(self):
         #Close Valve 1:
         self.ui.progressLabel.setText("v1 closed")
-        self.ui.v1.setStyleSheet("background-color: red")
+        self.ui.v1.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -326,7 +326,7 @@ class MyForm(QtGui.QMainWindow):
     def v2close(self):
         #Close Valve 2:
         self.ui.progressLabel.setText("v2 closed")
-        self.ui.v2.setStyleSheet("background-color: red")
+        self.ui.v2.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -350,7 +350,7 @@ class MyForm(QtGui.QMainWindow):
     def v3close(self):
         #Close Valve 3:
         self.ui.progressLabel.setText("v3 closed")
-        self.ui.v3.setStyleSheet("background-color: red")
+        self.ui.v3.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -380,7 +380,7 @@ class MyForm(QtGui.QMainWindow):
     def v4close(self):
         #Close Valve 4:
         self.ui.progressLabel.setText("v4 closed")
-        self.ui.v4.setStyleSheet("background-color: red")
+        self.ui.v4.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -406,7 +406,7 @@ class MyForm(QtGui.QMainWindow):
     def v5close(self): #CURRENTLY NOT USED
         #Close Valve 5:
         self.ui.progressLabel.setText("v5 closed")
-        self.ui.v5.setStyleSheet("background-color: red")
+        self.ui.v5.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -433,7 +433,7 @@ class MyForm(QtGui.QMainWindow):
     def v6close(self):
         #Close Valve 6:
         self.ui.progressLabel.setText("v6 closed")
-        self.ui.v6.setStyleSheet("background-color: red")
+        self.ui.v6.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -459,7 +459,7 @@ class MyForm(QtGui.QMainWindow):
     def v7close(self):
         #Close Valve 7:
         self.ui.progressLabel.setText("v7 closed")
-        self.ui.v7.setStyleSheet("background-color: red")
+        self.ui.v7.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -485,7 +485,7 @@ class MyForm(QtGui.QMainWindow):
     def v8close(self):
         #Close Valve 8:
         self.ui.progressLabel.setText("v8 closed")
-        self.ui.v8.setStyleSheet("background-color: red")
+        self.ui.v8.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -511,7 +511,7 @@ class MyForm(QtGui.QMainWindow):
     def v10close(self):
         #Close Valve 10:
         self.ui.progressLabel.setText("v10 closed")
-        self.ui.v10.setStyleSheet("background-color: red")
+        self.ui.v10.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -537,7 +537,7 @@ class MyForm(QtGui.QMainWindow):
     def v11close(self):
         #Close Valve 11:
         self.ui.progressLabel.setText("v11 closed")
-        self.ui.v11.setStyleSheet("background-color: red")
+        self.ui.v11.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -563,7 +563,7 @@ class MyForm(QtGui.QMainWindow):
     def v12close(self):
         #Close Valve 12:
         self.ui.progressLabel.setText("v12 closed")
-        self.ui.v12.setStyleSheet("background-color: red")
+        self.ui.v12.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -589,7 +589,7 @@ class MyForm(QtGui.QMainWindow):
     def v13close(self):
         #Close Valve 13:
         self.ui.progressLabel.setText("v13 closed")
-        self.ui.v13.setStyleSheet("background-color: red")
+        self.ui.v13.setStyleSheet("background-color: orange")
         QtGui.qApp.processEvents()
         time.sleep(0.5)
         #GPIO signal here
@@ -713,7 +713,11 @@ class MyForm(QtGui.QMainWindow):
         QtGui.qApp.processEvents()
 
 #        self.ui.lblProcess.setText("Start Measurement")
-        os.system("python /home/pi/PiMS/DisplaySRS/SRSRead.py")
+        HomeDir=os.getenv("HOME")
+        WorkDir=HomeDir+'/PiMS/DisplaySRS/SRSRead.py'
+        print(WorkDir)
+
+        os.system("python "+WorkDir)
         self.ui.lblProcess.setText("End Measurement")
     #    for x in range(0, 60):
     #        self.ui.progressLabel.setText("Time %d" % (x))
@@ -782,11 +786,11 @@ class MyForm(QtGui.QMainWindow):
         self.UpdateTankNumbers()
 
     def QShot(self):
-        self.ui.runningButton.setStyleSheet("background-color: red")
+        self.ui.runningButton.setStyleSheet("background-color: orange")
         self.ui.runningButton.setChecked(True)
 
         #Change Button colour
-        self.ui.stdButton.setStyleSheet("background-color: red")
+        self.ui.stdButton.setStyleSheet("background-color: orange")
         self.ui.stdButton.setChecked(True)        
 
        #Change Buttons to prevent duplication
@@ -836,12 +840,12 @@ class MyForm(QtGui.QMainWindow):
         
     def LineBlank(self):
         #show something running
-        self.ui.runningButton.setStyleSheet("background-color: red")
+        self.ui.runningButton.setStyleSheet("background-color: orange")
         self.ui.runningButton.setChecked(True)
         #os.system("python /home/pi/PiMS/DisplaySRS/SRSRead.py")
 
         #Change Button colour
-        self.ui.lbButton.setStyleSheet("background-color: red")
+        self.ui.lbButton.setStyleSheet("background-color: orange")
         self.ui.lbButton.setChecked(True)        
 
         #Change Buttons to prevent duplication

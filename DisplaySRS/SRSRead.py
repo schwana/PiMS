@@ -38,6 +38,7 @@ class SRSForm(QtGui.QMainWindow):
 
     def ReadQMA(self):
 
+
         #try to connect to QMA
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(5) #5 second timeout
@@ -53,7 +54,11 @@ class SRSForm(QtGui.QMainWindow):
     def OfflineMode(self):
         print "Offline Mode"
 
-        my_data=np.genfromtxt('/home/pi/PiMS/DisplaySRS/HeDummy.csv',delimiter=',')
+        HomeDir=os.getenv("HOME")
+        WorkDir=HomeDir+'/PiMS/DisplaySRS/HeDummy.csv'
+        print(WorkDir)
+
+        my_data=np.genfromtxt(WorkDir,delimiter=',')
 
         print len(my_data)
 
