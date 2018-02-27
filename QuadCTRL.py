@@ -28,6 +28,7 @@ class MyForm(QtGui.QMainWindow):
       self.ui.setupUi(self)
       #Comment next line for frame
 #      self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+      self.showMaximized()
       #Initialise Clock
       self.timer = QtCore.QTimer(self)
       self.timer.timeout.connect(self.Time)
