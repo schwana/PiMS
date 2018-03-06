@@ -112,71 +112,68 @@ class SRSForm(QtGui.QMainWindow):
             #### READ MASS 1  ####
             MeasureTimeM1=time.time()
             uf_m1 = float(dataLine[0])
-
+            x1=MeasureTimeM1-CurTime
+            y1=math.log10(uf_m1)
+            spots1.append({'pos':(x1,y1)})
+            s1.addPoints(spots1)
+            QtGui.qApp.processEvents()
 
             time.sleep(1)
             #### READ MASS 3  ####
             uf_m3 = float(dataLine[1])
             MeasureTimeM3=time.time()
+            x3=MeasureTimeM3-CurTime
+            y3=math.log10(uf_m3)
+            spots3.append({'pos':(x3,y3)})
+            s2.addPoints(spots3)
+            QtGui.qApp.processEvents()
 
 
             time.sleep(1)
             #### READ MASS 4  ####
             uf_m4 = float(dataLine[2])
             MeasureTimeM4=time.time()
+            x4=MeasureTimeM4-CurTime
+            y4=math.log10(uf_m4)
+            spots4.append({'pos':(x4,y4)})
+            s3.addPoints(spots4)
+            QtGui.qApp.processEvents()
 
 
             time.sleep(1)
             #### READ MASS 5  ####
             uf_m5 = float(dataLine[3])
             MeasureTimeM5=time.time()
+            x5=MeasureTimeM5-CurTime
+            y5=math.log10(uf_m5)
+            spots5.append({'pos':(x5,y5)})
+            s4.addPoints(spots5)
+            QtGui.qApp.processEvents()
+            
 
 
             time.sleep(1)
             #### READ MASS 40  ####
             uf_m40 = float(dataLine[4])
             MeasureTimeM40=time.time()
-
+            x40=MeasureTimeM40-CurTime
+            y40=math.log10(uf_m40)
+            spots40.append({'pos':(x40,y40)})
+            s5.addPoints(spots40)
+            QtGui.qApp.processEvents()
 
             time.sleep(1)
             
- 
+         
 
-
-
-            x1=MeasureTimeM1-CurTime
-            x3=MeasureTimeM3-CurTime
-            x4=MeasureTimeM4-CurTime
-            x5=MeasureTimeM5-CurTime
-            x40=MeasureTimeM40-CurTime
             
-            #pos[1]=uf_m1
-            y1=math.log10(uf_m1)
-            y3=math.log10(uf_m3)
-            y4=math.log10(uf_m4)
-            y5=math.log10(uf_m5)
-            y40=math.log10(uf_m40)
-
-            print(y1)
-            print(y3)
-            print(y4)
-            print(y5)
-            print(y40)
-
-            spots1.append({'pos':(x1,y1)})
-            spots3.append({'pos':(x3,y3)})
-            spots4.append({'pos':(x4,y4)})
-            spots5.append({'pos':(x5,y5)})
-            spots40.append({'pos':(x40,y40)})
-
-            s1.addPoints(spots1)
-            s2.addPoints(spots3)
-            s3.addPoints(spots4)
-            s4.addPoints(spots5)
-            s5.addPoints(spots40)
+            
+            
+            
+            
             #w1.setYRange(-15,-9, 0)
           
-            QtGui.qApp.processEvents()
+            
        
 
         

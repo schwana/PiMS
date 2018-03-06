@@ -44,6 +44,7 @@ class MyForm(QtGui.QMainWindow):
       #Initialise the various buttons
       self.InitButtons()
       self.disableValveButtons()
+      self.disableGetter()
 
 ## -------------- INITIALISATION ----------------##
 
@@ -66,42 +67,110 @@ class MyForm(QtGui.QMainWindow):
        #Auto/manual Button 
       QtCore.QObject.connect(self.ui.pushButtonAuto,QtCore.SIGNAL("clicked()"),self.AutoPushed)
       self.ui.pushButtonAuto.setStyleSheet("background-color: orange")
+       #Auto/manual Button 
+      QtCore.QObject.connect(self.ui.runAllButton,QtCore.SIGNAL("clicked()"),self.RunAllSamples)
+      self.ui.runAllButton.setStyleSheet("background-color: green")
       #Test Check Box
       QtCore.QObject.connect(self.ui.checkBoxTest,QtCore.SIGNAL("stateChanged(int)"),self.TestBox)
       self.TestBox()
-       #Hole + Button 
-      QtCore.QObject.connect(self.ui.pushButtonHolePlus,QtCore.SIGNAL("clicked()"),self.HolePlus)
-       #Hole - Button 
-      QtCore.QObject.connect(self.ui.pushButtonHoleMinus,QtCore.SIGNAL("clicked()"),self.HoleMinus)
+##       #Hole + Button 
+##      QtCore.QObject.connect(self.ui.pushButtonHolePlus,QtCore.SIGNAL("clicked()"),self.HolePlus)
+##       #Hole - Button 
+##      QtCore.QObject.connect(self.ui.pushButtonHoleMinus,QtCore.SIGNAL("clicked()"),self.HoleMinus)
       #Table (Sample)
       QtCore.QObject.connect(self.ui.tableWidgetSamples,QtCore.SIGNAL("cellClicked(int,int)"),self.SampleTable)
+      QtCore.QObject.connect(self.ui.tableWidgetStandards1,QtCore.SIGNAL("cellClicked(int,int)"),self.StdTable1)
+      QtCore.QObject.connect(self.ui.tableWidgetStandards2,QtCore.SIGNAL("cellClicked(int,int)"),self.StdTable2)
+      #QtCore.QObject.connect(self.ui.tableWidgetSamples,QtCore.SIGNAL("cellChanged(int,int)"),self.SampleTable)
+      #QtCore.QObject.connect(self.ui.tableWidgetStandards1,QtCore.SIGNAL("cellChanged(int,int)"),self.StdTable1)
+      #QtCore.QObject.connect(self.ui.tableWidgetStandards2,QtCore.SIGNAL("cellChanged(int,int)"),self.StdTable2)
+      
       
 
 
     def SampleTable(self):
-        #nothing here yet
-        print("Table")
+
+        #on clicking any cell, loop through the cells and leave any cells which are empty white.
+        #colour purple any populated cells.
+        for i in range (0,self.ui.tableWidgetSamples.rowCount()):
+            for j in range (0,self.ui.tableWidgetSamples.columnCount()):
+                cellText=self.ui.tableWidgetSamples.item(i,j)
+                if cellText is None:
+                    try:
+                        self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,255,255))
+                    except:
+                        pass
+                else:
+                    print (cellText.text())
+                    if  cellText.text().replace(" ","")=="":
+                        self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,255,255))
+                        self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(0,0,0))
+                    else:    
+                        self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(100,100,150))
+                        self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(255,255,255))
+       
+
+    def StdTable1(self):
+
+        #on clicking any cell, loop through the cells and leave any cells which are empty white.
+        #colour purple any populated cells.
+        for i in range (0,self.ui.tableWidgetStandards1.rowCount()):
+            for j in range (0,self.ui.tableWidgetStandards1.columnCount()):
+                cellText=self.ui.tableWidgetStandards1.item(i,j)
+                if cellText is None:
+                    try:
+                        self.ui.tableWidgetStandards1.item(i,j).setBackground(QtGui.QColor(255,255,255))
+                    except:
+                        pass
+                else:
+                    if  cellText.text().replace(" ","")=="":
+                        self.ui.tableWidgetStandards1.item(i,j).setBackground(QtGui.QColor(255,255,255))
+                        self.ui.tableWidgetStandards1.item(i,j).setForeground(QtGui.QColor(0,0,0))
+                    else:    
+                        self.ui.tableWidgetStandards1.item(i,j).setBackground(QtGui.QColor(100,100,150))
+                        self.ui.tableWidgetStandards1.item(i,j).setForeground(QtGui.QColor(255,255,255))
+                        #self.ui.tableWidgetStandards1.clear()
+
+ 
+ 
+                
+    def StdTable2(self):
+
+        #on clicking any cell, loop through the cells and leave any cells which are empty white.
+        #colour purple any populated cells.
+        for i in range (0,self.ui.tableWidgetStandards2.rowCount()):
+            for j in range (0,self.ui.tableWidgetStandards2.columnCount()):
+                cellText=self.ui.tableWidgetStandards2.item(i,j)
+                if cellText is None:
+                    try:
+                        self.ui.tableWidgetStandards2.item(i,j).setBackground(QtGui.QColor(255,255,255))
+                    except:
+                        pass
+                else:
+                    if  cellText.text().replace(" ","")=="":
+                        self.ui.tableWidgetStandards2.item(i,j).setBackground(QtGui.QColor(255,255,255))
+                        self.ui.tableWidgetStandards2.item(i,j).setForeground(QtGui.QColor(0,0,0))
+                    else:    
+                        self.ui.tableWidgetStandards2.item(i,j).setBackground(QtGui.QColor(100,100,150))
+                        self.ui.tableWidgetStandards2.item(i,j).setForeground(QtGui.QColor(255,255,255))
+      
+
+
+
+
         
-    def HolePlus(self):        
-        cur = self.ui.spinBoxHole.value()
-        cur = cur+1
-        self.ui.spinBoxHole.setValue(cur)
-
-    def HoleMinus(self):
-        cur = self.ui.spinBoxHole.value()
-        cur = cur-1
-        self.ui.spinBoxHole.setValue(cur)
-
     def AutoPushed(self):
         #CHANGE THIS SO THAT PRESSING THE BUTTON ENABLES/DISABLES THE VALVE BUTTONS
 	#HAVE A SEPARATE THREAD TO DISABLE THE BUTTONS - VALVES AS PART OF ONE
 	#BUTTON GROUP? WILL SAVE CODE LATER.... LOOK UP BUTTON GROUPS
         if self.ui.pushButtonAuto.isChecked():
             self.enableValveButtons()
+            self.enableGetter()
             self.ui.pushButtonAuto.setStyleSheet("background-color: green")
             self.ui.pushButtonAuto.setText("Manual")
         else:
             self.disableValveButtons()
+            self.disableGetter()
             self.ui.pushButtonAuto.setStyleSheet("background-color: orange")
             self.ui.pushButtonAuto.setText("Auto")
             
@@ -187,6 +256,12 @@ class MyForm(QtGui.QMainWindow):
         self.ui.v11.setEnabled(False)
         self.ui.v12.setEnabled(False)
         self.ui.v13.setEnabled(False)
+
+    def disableGetter(self):
+        self.ui.dialGetter.setEnabled(False)
+        
+    def enableGetter(self):
+        self.ui.dialGetter.setEnabled(True)
 
     def enableValveButtons(self):
         self.ui.v1.setEnabled(True)
@@ -639,7 +714,7 @@ class MyForm(QtGui.QMainWindow):
         self.ui.lblProcess.setText("Pump pipettes")
         self.v2open()
         self.v3open()
-        for x in range(0, 20):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -653,7 +728,7 @@ class MyForm(QtGui.QMainWindow):
         self.v1close()
         self.v4open()
         self.He3Increment()
-        for x in range(0, 15):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -666,7 +741,7 @@ class MyForm(QtGui.QMainWindow):
         self.He4Increment()
         self.v4open()
         self.He3Increment()
-        for x in range(0, 15):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -688,7 +763,7 @@ class MyForm(QtGui.QMainWindow):
         #Open laser port
         self.ui.lblProcess.setText("Open Laser Port")
         self.v10open()
-        for x in range(0, 15):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -701,7 +776,8 @@ class MyForm(QtGui.QMainWindow):
         value = 60*self.ui.dialGetter.value()
 
         self.ui.lblProcess.setText("Getter")
-        for x in range(0, value):
+        #for x in range(0, value):
+        for x in range(0, 10):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -737,7 +813,7 @@ class MyForm(QtGui.QMainWindow):
         #End part of sequence
         #Open ion pump (v6)    
         self.v6open()
-        for x in range(0, 60):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -745,7 +821,7 @@ class MyForm(QtGui.QMainWindow):
         self.ui.lblProcess.setText("Clean Pipettes")       
         self.v2open()
         self.v3open()
-        for x in range(0, 60):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -754,7 +830,7 @@ class MyForm(QtGui.QMainWindow):
         self.v3close()
         #wait 5 mins
         self.ui.lblProcess.setText("5 min wait")   
-        for x in range(0, 10):
+        for x in range(0, 5):
             self.ui.progressLabel.setText("Time %d" % (x))
             time.sleep(1)
             QtGui.qApp.processEvents()
@@ -793,40 +869,7 @@ class MyForm(QtGui.QMainWindow):
         fo.close()
         self.UpdateTankNumbers()
 
-    def QShot(self):
-        self.ui.runningButton.setStyleSheet("background-color: orange")
-        self.ui.runningButton.setChecked(True)
-
-        #Change Button colour
-        self.ui.stdButton.setStyleSheet("background-color: orange")
-        self.ui.stdButton.setChecked(True)        
-
-       #Change Buttons to prevent duplication
-        self.ui.lbButton.setEnabled(False)
-        self.ui.stdButton.setEnabled(False)
-        self.ui.sampleButton.setEnabled(False)
-        self.ui.lblProcess.setText("Standard Started")
-        
-        self.RunPrelim()
-        
-        self.LoadPipettesStandard()
-
-
-        self.PreMeasure()
-
-        self.QuadMeaure()
-
-        self.LineCleanUp()
-
-        #Reset Buttons
-        self.ui.lblProcess.setText("inactive")               
-        self.ui.stdButton.setStyleSheet("background-color: green")
-        self.ui.stdButton.setChecked(False)
-        self.ui.lbButton.setEnabled(True)
-        self.ui.stdButton.setEnabled(True)
-        self.ui.sampleButton.setEnabled(True)
-        self.ui.runningButton.setStyleSheet("background-color: green")
-        self.ui.runningButton.setChecked(False)
+ 
 
     def GPIOSetup(self):
         GPIO.setmode(GPIO.BCM)
@@ -845,6 +888,29 @@ class MyForm(QtGui.QMainWindow):
         GPIO.setup(24,GPIO.OUT)
 
 
+    def disableButtons(self):
+       #Change Buttons to prevent duplication
+        self.ui.runAllButton.setEnabled(False)
+        self.ui.lbButton.setEnabled(False)
+        self.ui.stdButton.setEnabled(False)
+        self.ui.sampleButton.setEnabled(False)
+
+    def resetButtons(self):
+
+        self.ui.lblProcess.setText("inactive")               
+        self.ui.lbButton.setStyleSheet("background-color: green")
+        self.ui.lbButton.setChecked(False)
+        self.ui.lbButton.setEnabled(True)
+        self.ui.runAllButton.setEnabled(True)
+        self.ui.stdButton.setEnabled(True)
+        self.ui.sampleButton.setEnabled(True)
+
+    def disableSampleHolder(self):
+        self.ui.tableWidgetStandards1.setEnabled(False)
+        self.ui.tableWidgetStandards2.setEnabled(False)
+        self.ui.tableWidgetSamples.setEnabled(False)
+ 
+
         
     def LineBlank(self):
         #show something running
@@ -854,12 +920,10 @@ class MyForm(QtGui.QMainWindow):
 
         #Change Button colour
         self.ui.lbButton.setStyleSheet("background-color: orange")
-        self.ui.lbButton.setChecked(True)        
+        self.ui.lbButton.setChecked(True)
 
-        #Change Buttons to prevent duplication
-        self.ui.lbButton.setEnabled(False)
-        self.ui.stdButton.setEnabled(False)
-        self.ui.sampleButton.setEnabled(False)
+        self.disableButtons()
+
         self.ui.lblProcess.setText("Line Blank Started")
 
         self.RunPrelim()
@@ -872,17 +936,244 @@ class MyForm(QtGui.QMainWindow):
 
         self.LineCleanUp()
 
-        #Reset Buttons
-        self.ui.lblProcess.setText("inactive")               
-        self.ui.lbButton.setStyleSheet("background-color: green")
-        self.ui.lbButton.setChecked(False)
-        self.ui.lbButton.setEnabled(True)
-        self.ui.stdButton.setEnabled(True)
-        self.ui.sampleButton.setEnabled(True)
+        self.resetButtons()
+
+
         
         self.ui.runningButton.setStyleSheet("background-color: green")
         self.ui.runningButton.setChecked(False)
+
+    def Extract(self):
+        #show something running
+        self.ui.runningButton.setStyleSheet("background-color: orange")
+        self.ui.runningButton.setChecked(True)
+
+
+        #Change Button colour
+        self.ui.sampleButton.setStyleSheet("background-color: orange")
+        self.ui.sampleButton.setChecked(True)
+
+        self.disableButtons()
+
+        self.ui.lblProcess.setText("Extract Started")
+
+        self.RunPrelim()
+
+        self.LoadPipettesSampleBlank()
+
+        self.PreMeasure()
         
+        self.QuadMeaure()
+
+        self.LineCleanUp()
+
+        #self.resetButtons()
+
+    def ReExtract(self):
+        #show something running
+        self.ui.runningButton.setStyleSheet("background-color: orange")
+        self.ui.runningButton.setChecked(True)
+
+
+        #Change Button colour
+        self.ui.sampleButton.setStyleSheet("background-color: orange")
+        self.ui.sampleButton.setChecked(True)
+
+        self.disableButtons()
+
+        self.ui.lblProcess.setText("Re-extract  Started")
+
+        self.RunPrelim()
+
+        self.LoadPipettesSampleBlank()
+
+        self.PreMeasure()
+        
+        self.QuadMeaure()
+
+        self.LineCleanUp()
+
+        #self.resetButtons()
+
+        
+        self.ui.runningButton.setStyleSheet("background-color: green")
+        self.ui.runningButton.setChecked(False)        
+        
+    def RunAllSamples(self):
+        print ("Tidy Up Sample Holder")
+        self.ui.tableWidgetStandards1.clearSelection()
+        self.ui.tableWidgetStandards2.clearSelection()
+        self.ui.tableWidgetSamples.clearSelection()
+        self.StdTable1()
+        self.StdTable2()
+        self.SampleTable()
+        
+        print ("Running All Samples")
+        #show something running
+        self.ui.runningButton.setStyleSheet("background-color: orange")
+        self.ui.runningButton.setChecked(True)
+        #os.system("python /home/pi/PiMS/DisplaySRS/SRSRead.py")
+
+        #Change Button colour
+        self.ui.runAllButton.setStyleSheet("background-color: yellow")
+        self.ui.runAllButton.setChecked(True)
+
+
+        self.disableButtons()
+        self.disableSampleHolder()
+
+        #Initial LB, Q, LB
+        self.LineBlank()
+        self.QShot()
+        self.LineBlank()
+
+        self.disableButtons()
+
+        #Run First Set of Standards
+
+        for j in range (0,self.ui.tableWidgetStandards1.columnCount()):
+            cellText=self.ui.tableWidgetStandards1.item(0,j)
+            if cellText is None:
+                try:
+                    pass
+                except:
+                    pass
+            else:
+                if  cellText.text().replace(" ","")=="":
+                    self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,255,255))
+                    self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))
+                else:    
+                    print(j)
+                    #Extract
+                    self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,215,0))
+                    self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))
+                    #SAMPLE RUN ROUTINE
+                    #for x in range(0, 5):
+                    #    self.ui.progressLabel.setText("Time %d" % (x))
+                     #   time.sleep(1)
+                    #    QtGui.qApp.processEvents()
+                    self.Extract()
+                    #Re-extract
+                    self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,165,0))
+                    self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))    
+                    #SAMPLE RE-RUN ROUTINE
+##                    for x in range(0, 5):
+##                        self.ui.progressLabel.setText("Time %d" % (x))
+##                        time.sleep(1)
+##                        QtGui.qApp.processEvents()                   
+                    self.ReExtract()
+                        
+                    #Finished cell - change to red            
+                    self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,0,0))
+                    self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(255,255,255))    
+
+        #Run Samples
+        SampleNumber=0
+
+
+
+        for i in range (0,self.ui.tableWidgetSamples.rowCount()):
+            for j in range (0,self.ui.tableWidgetSamples.columnCount()):
+                cellText=self.ui.tableWidgetSamples.item(i,j)
+                if cellText is None:
+                    try:
+                        pass
+                    except:
+                        pass
+                else:
+                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(0,255,255))
+                    self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(255,255,255))
+
+                    
+                    for x in range(0, 5):
+                        self.ui.progressLabel.setText("Time %d" % (x))
+                        time.sleep(1)
+                        QtGui.qApp.processEvents()
+                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,69,0))
+
+
+                    for x in range(0, 5):
+                        self.ui.progressLabel.setText("Time %d" % (x))
+                        time.sleep(1)
+                        QtGui.qApp.processEvents()
+                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,0,0))
+
+                    SampleNumber=SampleNumber+1
+
+                    if SampleNumber==4:
+                        self.LineBlank()
+                        SampleNumber=0
+                        
+
+                
+
+        #Final LB, Q, LB
+        self.LineBlank()
+        self.QShot()
+        self.LineBlank()
+
+
+        #Run Second Set of Standards
+        for j in range (0,self.ui.tableWidgetStandards2.columnCount()):
+            cellText=self.ui.tableWidgetStandards2.item(0,j)
+            if cellText is None:
+                try:
+                    pass
+                except:
+                    pass
+            else:
+                if  cellText.text().replace(" ","")=="":
+                    self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,255,255))
+                    self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(0,0,0))
+                else:    
+                    self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(0,255,255))
+                    self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(255,255,255))
+
+                    print(j)
+                    for x in range(0, 10):
+                        self.ui.progressLabel.setText("Time %d" % (x))
+                        time.sleep(1)
+                        QtGui.qApp.processEvents()
+
+                                
+                    self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,0,0))
+
+        
+        self.resetButtons()
+        
+        self.ui.runAllButton.setStyleSheet("background-color: green")
+        self.ui.runAllButton.setChecked(True)
+        self.ui.runningButton.setStyleSheet("background-color: green")
+        self.ui.runningButton.setChecked(False)        
+
+    def QShot(self):
+        self.ui.runningButton.setStyleSheet("background-color: orange")
+        self.ui.runningButton.setChecked(True)
+
+        #Change Button colour
+        self.ui.stdButton.setStyleSheet("background-color: orange")
+        self.ui.stdButton.setChecked(True)        
+
+        #Change Buttons to prevent duplication
+        self.disableButtons()
+        self.ui.lblProcess.setText("Standard Started")
+        
+        self.RunPrelim()
+        
+        self.LoadPipettesStandard()
+
+
+        self.PreMeasure()
+
+        self.QuadMeaure()
+
+        self.LineCleanUp()
+
+        #Reset Buttons
+        self.resetButtons()
+        self.ui.stdButton.setStyleSheet("background-color: green")
+        self.ui.stdButton.setChecked(True)        
+
 
 
 if __name__ == "__main__":
