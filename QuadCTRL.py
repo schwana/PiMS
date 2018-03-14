@@ -1,6 +1,7 @@
 import sys
 import time
 import os
+import serial
 
 from PyQt4 import QtCore, QtGui
 from time import strftime
@@ -956,7 +957,7 @@ class MyForm(QtGui.QMainWindow):
         self.disableButtons()
 
         self.ui.lblProcess.setText("Extract Started")
-
+        
         self.RunPrelim()
 
         self.LoadPipettesSampleBlank()
@@ -1028,7 +1029,8 @@ class MyForm(QtGui.QMainWindow):
         self.LineBlank()
 
         self.disableButtons()
-
+        
+        
         #Run First Set of Standards
 
         for j in range (0,self.ui.tableWidgetStandards1.columnCount()):
@@ -1044,23 +1046,19 @@ class MyForm(QtGui.QMainWindow):
                     self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))
                 else:    
                     print(j)
+                    SampleHoleNumber=j+10
+                    print ("SampleHoleNumber: ", SampleHoleNumber)
                     #Extract
                     self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,215,0))
                     self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))
-                    #SAMPLE RUN ROUTINE
-                    #for x in range(0, 5):
-                    #    self.ui.progressLabel.setText("Time %d" % (x))
-                     #   time.sleep(1)
-                    #    QtGui.qApp.processEvents()
+                    #Move to new sample location before continuing
+                    QtGui.qApp.processEvents()
+                    self.SampleMove(SampleHoleNumber)                   
                     self.Extract()
                     #Re-extract
                     self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,165,0))
                     self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))    
-                    #SAMPLE RE-RUN ROUTINE
-##                    for x in range(0, 5):
-##                        self.ui.progressLabel.setText("Time %d" % (x))
-##                        time.sleep(1)
-##                        QtGui.qApp.processEvents()                   
+
                     self.ReExtract()
                         
                     #Finished cell - change to red            
@@ -1084,19 +1082,26 @@ class MyForm(QtGui.QMainWindow):
                     self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(0,255,255))
                     self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(255,255,255))
 
-                    
-                    for x in range(0, 5):
-                        self.ui.progressLabel.setText("Time %d" % (x))
-                        time.sleep(1)
-                        QtGui.qApp.processEvents()
-                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,69,0))
+                    #EXTRACT
+                    SampleHoleNumber=(1+i)*(13+j)
+                    print ("SampleHoleNumber: ", SampleHoleNumber)
+                            
+                    #Extract
+                    self.ui.tableWidgetSamples.item(0,j).setBackground(QtGui.QColor(255,215,0))
+                    self.ui.tableWidgetSamples.item(0,j).setForeground(QtGui.QColor(0,0,0))
+                    #Move to new sample location before continuing
+                    QtGui.qApp.processEvents()
+                    self.SampleMove(SampleHoleNumber)                   
+                    self.Extract()
+                    #Re-extract
+                    self.ui.tableWidgetSamples.item(0,j).setBackground(QtGui.QColor(255,165,0))
+                    self.ui.tableWidgetSamples.item(0,j).setForeground(QtGui.QColor(0,0,0))    
 
-
-                    for x in range(0, 5):
-                        self.ui.progressLabel.setText("Time %d" % (x))
-                        time.sleep(1)
-                        QtGui.qApp.processEvents()
-                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,0,0))
+                    self.ReExtract()
+                        
+                    #Finished cell - change to red            
+                    self.ui.tableWidgetSamples.item(0,j).setBackground(QtGui.QColor(255,0,0))
+                    self.ui.tableWidgetSamples.item(0,j).setForeground(QtGui.QColor(255,255,255))    
 
                     SampleNumber=SampleNumber+1
 
@@ -1126,17 +1131,25 @@ class MyForm(QtGui.QMainWindow):
                     self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,255,255))
                     self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(0,0,0))
                 else:    
-                    self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(0,255,255))
-                    self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(255,255,255))
-
                     print(j)
-                    for x in range(0, 10):
-                        self.ui.progressLabel.setText("Time %d" % (x))
-                        time.sleep(1)
-                        QtGui.qApp.processEvents()
+                    SampleHoleNumber=j+62
+                    print ("SampleHoleNumber: ", SampleHoleNumber)
+                    #Extract
+                    self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,215,0))
+                    self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(0,0,0))
+                    #Move to new sample location before continuing
+                    QtGui.qApp.processEvents()
+                    self.SampleMove(SampleHoleNumber)                   
+                    self.Extract()
+                    #Re-extract
+                    self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,165,0))
+                    self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(0,0,0))    
 
-                                
+                    self.ReExtract()
+                        
+                    #Finished cell - change to red            
                     self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,0,0))
+                    self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(255,255,255))    
 
         
         self.resetButtons()
@@ -1174,6 +1187,35 @@ class MyForm(QtGui.QMainWindow):
         self.ui.stdButton.setStyleSheet("background-color: green")
         self.ui.stdButton.setChecked(True)        
 
+    def SampleMove(self, holeNumber):
+        print ("Communicate with Arduino to move to hole number ", holeNumber)
+        try:
+            
+            ser = serial.Serial('/dev/ttyACM0', 9600)
+            ser.write('\r')
+            time.sleep(1)
+            ser.write('\r')
+            time.sleep(1)
+
+            ser.write(str(holeNumber).encode('utf-8')+'\n')
+
+            s = [0]
+            while True:
+                read_serial=ser.readline()
+                print read_serial
+
+                S = str(read_serial)
+
+                print ("S ",S)
+                line = S.split("\\")
+                line_int = int(line[0])
+
+                if line_int==1:
+                    break
+
+            print "Sample Moved"
+        except serial.SerialException, exc:
+            print "Arduino error : %s" % exc
 
 
 if __name__ == "__main__":
