@@ -799,9 +799,20 @@ class MyForm(QtGui.QMainWindow):
 
 #        self.ui.lblProcess.setText("Start Measurement")
         HomeDir=os.getenv("HOME")
-        WorkDir=HomeDir+'/PiMS/DisplaySRS/SRSRead.py'
-        print(WorkDir)
+        #WorkDir=HomeDir+'/PiMS/DisplaySRS/SRSRead.py'
 
+        Username = os.getenv("USER")
+        #WorkDir='/home/'+Username+'/PiMS/DisplaySRS/SRSRead.py'
+
+ 
+
+        _USERNAME = os.getenv("SUDO_USER") or os.getenv("USER")
+        _HOME = os.path.expanduser('~'+_USERNAME)
+
+        WorkDir= _HOME+'/PiMS/DisplaySRS/SRSRead.py'
+
+        print _HOME
+        print(WorkDir)
         os.system("python "+WorkDir)
         self.ui.lblProcess.setText("End Measurement")
     #    for x in range(0, 60):
