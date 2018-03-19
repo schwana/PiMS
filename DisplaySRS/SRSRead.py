@@ -39,14 +39,9 @@ class SRSForm(QtGui.QMainWindow):
     def ReadQMA(self):
 
 
-        #try to connect to QMA
-        s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(60) #5 second timeout
 
         try:
-            #s.connect(('192.168.0.3', 818)) #QMA net address and port
             print "Connecting to QMA"
-            #s.close()
             self.Test()
             print "self.test finished"
         except socket.error, exc:
@@ -185,6 +180,8 @@ class SRSForm(QtGui.QMainWindow):
     def Test(self):
         CurTime=time.time()
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(60) #60s second timeout
+
         s.connect(('192.168.0.3', 818)) 
 
         print (s.recv(1024))
@@ -225,7 +222,27 @@ class SRSForm(QtGui.QMainWindow):
             #w1.setLabel('left',"Signal", units='A')
             #w1.setLabel('bottom',"Time", units='s')
             #w1.showGrid(x=False, y=True)
+            w1.setLabel('left',"log(Signal)")
+            w1.showGrid(x=False, y=True)
             
+            s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 0, 0, 255), name='H')
+            s3 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(0, 255, 0, 255), name='3He')
+            s4 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(0, 0, 255, 255),name='4He')
+            s5 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 255, 0, 255), name='40Ar')
+            s40 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(0, 255, 255, 255), name='BL')
+
+            w1.addItem(s1)
+            w1.addItem(s3)
+            w1.addItem(s4)
+            w1.addItem(s5)
+            w1.addItem(s40)
+           
+            spots1=[]
+            spots3=[]
+            spots4=[]
+            spots5=[]
+            spots40=[]
+                
     ##        x =1
     ##      
     ##        n = 1
@@ -262,69 +279,153 @@ class SRSForm(QtGui.QMainWindow):
             time.sleep(1)
             j=0
             for x in range(0, 3):
-                uf=0.0
+   
+            #### READ MASS 1  ####
+                MeasureTimeM1=time.time()
+                s.send('MR1 \r')
+                time.sleep(5)
+                hex_string = s.recv(1024)
+                x1=MeasureTimeM1-CurTime
+                if len(hex_string)==4:
+                    u1=struct.unpack('<i',hex_string)[0]
+                    uf_m1=u1*1e-16
+                    print('MR1 :', uf_m1)
+                    y1=math.log10(uf_m1)
+                    spots1.append({'pos':(x1,y1)})
+                    s1.addPoints(spots1)
+                    QtGui.qApp.processEvents()
+                else:
+                    print('Error Mass 1: ',len(hex_string))
+                    #uf_m1=0.0
                 
-                MeasureTime40=time.time()
+
+            #### READ MASS 3  ####
+                MeasureTimeM3=time.time()
+                s.send('MR3 \r')
+                time.sleep(5)
+                hex_string = s.recv(1024)
+                x3=MeasureTimeM3-CurTime
+                if len(hex_string)==4:
+                    u3=struct.unpack('<i',hex_string)[0]
+                    uf_m3=u3*1e-16
+                    print('MR3 :', uf_m3)
+                    y3=math.log10(uf_m3)
+                    spots3.append({'pos':(x3,y3)})
+                    s3.addPoints(spots3)
+                    QtGui.qApp.processEvents()
+                else:
+                    print('Error Mass 3: ',len(hex_string))
+#                    uf_m3=0.0
+
+
+            #### READ MASS 4  ####
+                MeasureTimeM4=time.time()
+                s.send('MR4 \r')
+                time.sleep(5)
+                hex_string = s.recv(1024)
+                x4=MeasureTimeM4-CurTime
+                if len(hex_string)==4:
+                    u4=struct.unpack('<i',hex_string)[0]
+                    uf_m4=u4*1e-16
+                    print('MR4 :', uf_m3)
+                    y4=math.log10(uf_m4)
+                    spots4.append({'pos':(x4,y4)})
+                    s4.addPoints(spots4)
+                    QtGui.qApp.processEvents()
+                else:
+                    print('Error Mass 4: ',len(hex_string))
+#                    uf_m4=0.0
+ 
+            #### READ MASS 5  ####
+                MeasureTimeM5=time.time()
+                s.send('MR5 \r')
+                time.sleep(5)
+                hex_string = s.recv(1024)
+                x5=MeasureTimeM5-CurTime
+                if len(hex_string)==4:
+                    u5=struct.unpack('<i',hex_string)[0]
+                    uf_m5=u5*1e-16
+                    print('MR5 :', uf_5)
+                    y5=math.log10(uf_m5)
+                    spots5.append({'pos':(x5,y5)})
+                    s5.addPoints(spots5)
+                    QtGui.qApp.processEvents()
+                else:
+                    print('Error Mass 5: ',len(hex_string))
+#                    uf_m5=0.0
+
+            #### READ MASS 40  ####
+                MeasureTimeM40=time.time()
                 s.send('MR40 \r')
                 time.sleep(5)
                 hex_string = s.recv(1024)
-                print(repr(hex_string))
+                x40=MeasureTimeM40-CurTime
                 if len(hex_string)==4:
-                    u=struct.unpack('<i',hex_string)[0]
-                    uf=u*1e-16
-                    print('MR40 :', uf)
+                    u40=struct.unpack('<i',hex_string)[0]
+                    uf_m40=u40*1e-16
+                    print('MR4 :', uf_m40)
+                    y4=math.log10(uf_m40)
+                    spots40.append({'pos':(x40,y40)})
+                    s40.addPoints(spots40)
+                    QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 40: ',len(hex_string))
-                    uf=0.0
-                MeasureTime5=time.time()    
-                s.send('MR5\r')
-                hex_stringM5 = s.recv(4)
-                if len(hex_stringM5)==4:
-                    u5=struct.unpack('<i',hex_stringM5)[0]
-                    uf5=u5*1e-16
-                    print('MR5 :', uf5)
-                else:
-                    print('Error Mass 5: ',len(hex_stringM5))
-                    uf5=0.0
+                    #uf_m40=0.0
  
-                    
                 time.sleep(0.5)
 
-                
+##                #MASS 40
+##                MeasureTime40=time.time()
+##                s.send('MR40 \r')
+##                time.sleep(5)
+##                hex_string = s.recv(1024)
+##                print(repr(hex_string))
+##                if len(hex_string)==4:
+##                    u=struct.unpack('<i',hex_string)[0]
+##                    uf=u*1e-16
+##                    print('MR40 :', uf)
+##                else:
+##                    print('Error Mass 40: ',len(hex_string))
+##                    uf=0.0
+##
+##
+##                #MASS 5
+##                MeasureTime5=time.time()    
+##                s.send('MR5\r')
+##                hex_stringM5 = s.recv(4)
+##                if len(hex_stringM5)==4:
+##                    u5=struct.unpack('<i',hex_stringM5)[0]
+##                    uf5=u5*1e-16
+##                    print('MR5 :', uf5)
+##                else:
+##                    print('Error Mass 5: ',len(hex_stringM5))
+##                    uf5=0.0
+## 
+##                    
+##                time.sleep(0.5)
+##
+##            
 
-
-
-                #os.system("python /home/pi/PiMS/DisplaySRS/MeasureM40.py")
-                #spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
-                #spots2 = [{'pos2': pos2[:,i], 'data2': 1} for i in range(n)] + [{'pos2': [0,0], 'data2': 1}]
-                #pos[0]=j
-                
-    #            fo = open("/home/pi/PiMS/DisplaySRS/M40.txt", "r")
-    #            line = fo.readline()
-    #            fo.close()
-                
-    #            uf=float(line)
-
-
-                s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 0, 0, 120))
-                s2 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(0, 255, 0, 120))
-                pos = np.random.normal(size=(2,n), scale=1e-5)
-                pos2 = np.random.normal(size=(2,n), scale=1e-5)
-
-                
-
-                pos[0]=MeasureTime40-CurTime
-                pos2[0]=MeasureTime5-CurTime
-
-                if uf>0.0:
-                    pos[1]=uf
-                    s1.addPoints(x=pos[0],y=pos[1])
-                    w1.addItem(s1)
-                    
-                if uf5>0.0:
-                    pos2[1]=uf5
-                    #s2.addPoints(x=pos2[0],y=pos2[1])
-                    #w1.addItem(s2)
+##
+##                s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 0, 0, 120))
+##                s2 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(0, 255, 0, 120))
+##                pos = np.random.normal(size=(2,n), scale=1e-5)
+##                pos2 = np.random.normal(size=(2,n), scale=1e-5)
+##
+##                
+##
+##                pos[0]=MeasureTime40-CurTime
+##                pos2[0]=MeasureTime5-CurTime
+##
+##                if uf>0.0:
+##                    pos[1]=uf
+##                    s1.addPoints(x=pos[0],y=pos[1])
+##                    w1.addItem(s1)
+##                    
+##                if uf5>0.0:
+##                    pos2[1]=uf5
+##                    #s2.addPoints(x=pos2[0],y=pos2[1])
+##                    #w1.addItem(s2)
                     
                 
                 #w1.setYRange(-15,-9, padding=0)

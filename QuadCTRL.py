@@ -1087,21 +1087,22 @@ class MyForm(QtGui.QMainWindow):
                     print ("SampleHoleNumber: ", SampleHoleNumber)
                             
                     #Extract
-                    self.ui.tableWidgetSamples.item(0,j).setBackground(QtGui.QColor(255,215,0))
-                    self.ui.tableWidgetSamples.item(0,j).setForeground(QtGui.QColor(0,0,0))
+                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,215,0))
+                    self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(0,0,0))
                     #Move to new sample location before continuing
                     QtGui.qApp.processEvents()
                     self.SampleMove(SampleHoleNumber)                   
                     self.Extract()
                     #Re-extract
-                    self.ui.tableWidgetSamples.item(0,j).setBackground(QtGui.QColor(255,165,0))
-                    self.ui.tableWidgetSamples.item(0,j).setForeground(QtGui.QColor(0,0,0))    
+                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,165,0))
+                    self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(0,0,0))    
 
                     self.ReExtract()
                         
                     #Finished cell - change to red            
-                    self.ui.tableWidgetSamples.item(0,j).setBackground(QtGui.QColor(255,0,0))
-                    self.ui.tableWidgetSamples.item(0,j).setForeground(QtGui.QColor(255,255,255))    
+                    self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,0,0))
+                    
+                    self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(255,255,255))    
 
                     SampleNumber=SampleNumber+1
 
