@@ -41,12 +41,14 @@ class SRSForm(QtGui.QMainWindow):
 
         #try to connect to QMA
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(5) #5 second timeout
+        s.settimeout(60) #5 second timeout
 
         try:
-            s.connect(('192.168.0.3', 818)) #QMA net address and port
+            #s.connect(('192.168.0.3', 818)) #QMA net address and port
             print "Connecting to QMA"
+            #s.close()
             self.Test()
+            print "self.test finished"
         except socket.error, exc:
             print "Caught exception socket.error : %s" % exc
             self.OfflineMode()
@@ -182,8 +184,8 @@ class SRSForm(QtGui.QMainWindow):
 
     def Test(self):
         CurTime=time.time()
-        #s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #s.connect(('192.168.0.3', 818)) 
+        s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(('192.168.0.3', 818)) 
 
         print (s.recv(1024))
         s.send('Admin\r')
