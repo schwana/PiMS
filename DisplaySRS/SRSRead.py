@@ -345,7 +345,7 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u5=struct.unpack('<i',hex_string)[0]
                     uf_m5=u5*1e-16
-                    print('MR5 :', uf_5)
+                    print('MR5 :', uf_m5)
                     y5=math.log10(uf_m5)
                     spots5.append({'pos':(x5,y5)})
                     s5.addPoints(spots5)
@@ -363,8 +363,8 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u40=struct.unpack('<i',hex_string)[0]
                     uf_m40=u40*1e-16
-                    print('MR4 :', uf_m40)
-                    y4=math.log10(uf_m40)
+                    print('MR40 :', uf_m40)
+                    y40=math.log10(uf_m40)
                     spots40.append({'pos':(x40,y40)})
                     s40.addPoints(spots40)
                     QtGui.qApp.processEvents()
