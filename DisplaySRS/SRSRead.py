@@ -290,7 +290,7 @@ class SRSForm(QtGui.QMainWindow):
                     u1=struct.unpack('<i',hex_string)[0]
                     uf_m1=u1*1e-16
                     print('MR1 :', uf_m1)
-                    if y1>0:
+                    if uf_m1>0:
                         y1=math.log10(uf_m1)
                         spots1.append({'pos':(x1,y1)})
                         s1.addPoints(spots1)
@@ -310,7 +310,7 @@ class SRSForm(QtGui.QMainWindow):
                     u3=struct.unpack('<i',hex_string)[0]
                     uf_m3=u3*1e-16
                     print('MR3 :', uf_m3)
-                    if y3>0:
+                    if uf_m3>0:
                         y3=math.log10(uf_m3)
                         spots3.append({'pos':(x3,y3)})
                         s3.addPoints(spots3)
@@ -330,7 +330,7 @@ class SRSForm(QtGui.QMainWindow):
                     u4=struct.unpack('<i',hex_string)[0]
                     uf_m4=u4*1e-16
                     print('MR4 :', uf_m4)
-                    if y4>0:
+                    if uf_m4>0:
                         y4=math.log10(uf_m4)
                         spots4.append({'pos':(x4,y4)})
                         s4.addPoints(spots4)
@@ -349,7 +349,7 @@ class SRSForm(QtGui.QMainWindow):
                     u5=struct.unpack('<i',hex_string)[0]
                     uf_m5=u5*1e-16
                     print('MR5 :', uf_m5)
-                    if y5>0:
+                    if uf_m5>0:
                         y5=math.log10(uf_m5)
                         spots5.append({'pos':(x5,y5)})
                         s5.addPoints(spots5)
@@ -368,7 +368,7 @@ class SRSForm(QtGui.QMainWindow):
                     u40=struct.unpack('<i',hex_string)[0]
                     uf_m40=u40*1e-16
                     print('MR40 :', uf_m40)
-                    if y40>0:
+                    if uf_m40>0:
                         y40=math.log10(uf_m40)
                         spots40.append({'pos':(x40,y40)})
                         s40.addPoints(spots40)
