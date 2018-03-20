@@ -290,10 +290,11 @@ class SRSForm(QtGui.QMainWindow):
                     u1=struct.unpack('<i',hex_string)[0]
                     uf_m1=u1*1e-16
                     print('MR1 :', uf_m1)
-                    y1=math.log10(uf_m1)
-                    spots1.append({'pos':(x1,y1)})
-                    s1.addPoints(spots1)
-                    QtGui.qApp.processEvents()
+                    if y1>0:
+                        y1=math.log10(uf_m1)
+                        spots1.append({'pos':(x1,y1)})
+                        s1.addPoints(spots1)
+                        QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 1: ',len(hex_string))
                     #uf_m1=0.0
@@ -309,10 +310,11 @@ class SRSForm(QtGui.QMainWindow):
                     u3=struct.unpack('<i',hex_string)[0]
                     uf_m3=u3*1e-16
                     print('MR3 :', uf_m3)
-                    y3=math.log10(uf_m3)
-                    spots3.append({'pos':(x3,y3)})
-                    s3.addPoints(spots3)
-                    QtGui.qApp.processEvents()
+                    if y3>0:
+                        y3=math.log10(uf_m3)
+                        spots3.append({'pos':(x3,y3)})
+                        s3.addPoints(spots3)
+                        QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 3: ',len(hex_string))
 #                    uf_m3=0.0
@@ -327,11 +329,12 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u4=struct.unpack('<i',hex_string)[0]
                     uf_m4=u4*1e-16
-                    print('MR4 :', uf_m3)
-                    y4=math.log10(uf_m4)
-                    spots4.append({'pos':(x4,y4)})
-                    s4.addPoints(spots4)
-                    QtGui.qApp.processEvents()
+                    print('MR4 :', uf_m4)
+                    if y4>0:
+                        y4=math.log10(uf_m4)
+                        spots4.append({'pos':(x4,y4)})
+                        s4.addPoints(spots4)
+                        QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 4: ',len(hex_string))
 #                    uf_m4=0.0
@@ -346,10 +349,11 @@ class SRSForm(QtGui.QMainWindow):
                     u5=struct.unpack('<i',hex_string)[0]
                     uf_m5=u5*1e-16
                     print('MR5 :', uf_m5)
-                    y5=math.log10(uf_m5)
-                    spots5.append({'pos':(x5,y5)})
-                    s5.addPoints(spots5)
-                    QtGui.qApp.processEvents()
+                    if y5>0:
+                        y5=math.log10(uf_m5)
+                        spots5.append({'pos':(x5,y5)})
+                        s5.addPoints(spots5)
+                        QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 5: ',len(hex_string))
 #                    uf_m5=0.0
@@ -364,10 +368,11 @@ class SRSForm(QtGui.QMainWindow):
                     u40=struct.unpack('<i',hex_string)[0]
                     uf_m40=u40*1e-16
                     print('MR40 :', uf_m40)
-                    y40=math.log10(uf_m40)
-                    spots40.append({'pos':(x40,y40)})
-                    s40.addPoints(spots40)
-                    QtGui.qApp.processEvents()
+                    if y40>0:
+                        y40=math.log10(uf_m40)
+                        spots40.append({'pos':(x40,y40)})
+                        s40.addPoints(spots40)
+                        QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 40: ',len(hex_string))
                     #uf_m40=0.0
