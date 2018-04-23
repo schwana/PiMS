@@ -1079,10 +1079,11 @@ class MyForm(QtGui.QMainWindow):
         #Run Samples
         SampleNumber=0
 
-
+        SampleHoleNumber=12
 
         for i in range (0,self.ui.tableWidgetSamples.rowCount()):
             for j in range (0,self.ui.tableWidgetSamples.columnCount()):
+                SampleHoleNumber=SampleHoleNumber+1
                 cellText=self.ui.tableWidgetSamples.item(i,j)
                 if cellText is None:
                     try:
@@ -1094,7 +1095,7 @@ class MyForm(QtGui.QMainWindow):
                     self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(255,255,255))
 
                     #EXTRACT
-                    SampleHoleNumber=(1+i)*(13+j)
+                    #SampleHoleNumber=(1+i)*(13+j)
                     print ("SampleHoleNumber: ", SampleHoleNumber)
                             
                     #Extract
@@ -1118,8 +1119,14 @@ class MyForm(QtGui.QMainWindow):
                     SampleNumber=SampleNumber+1
 
                     if SampleNumber==4:
+                        self.ui.runningButton.setStyleSheet("background-color: green")
+                        self.ui.runningButton.setChecked(False)        
                         self.LineBlank()
                         SampleNumber=0
+                        self.ui.runningButton.setStyleSheet("background-color: orange")
+                        self.ui.runningButton.setChecked(True)
+
+                        
                         
 
                 
