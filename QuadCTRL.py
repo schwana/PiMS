@@ -1083,8 +1083,8 @@ class MyForm(QtGui.QMainWindow):
 
         for i in range (0,self.ui.tableWidgetSamples.rowCount()):
             for j in range (0,self.ui.tableWidgetSamples.columnCount()):
-                SampleHoleNumber=SampleHoleNumber+1
                 cellText=self.ui.tableWidgetSamples.item(i,j)
+                SampleHoleNumber=SampleHoleNumber+1
                 if cellText is None:
                     try:
                         pass

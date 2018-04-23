@@ -103,7 +103,7 @@ class SRSForm(QtGui.QMainWindow):
 
             
             
-            time.sleep(1)
+            time.sleep(0.1)
 
  
             #### READ MASS 1  ####
@@ -115,7 +115,7 @@ class SRSForm(QtGui.QMainWindow):
             s1.addPoints(spots1)
             QtGui.qApp.processEvents()
 
-            time.sleep(1)
+            time.sleep(0.1)
             #### READ MASS 3  ####
             uf_m3 = float(dataLine[1])
             MeasureTimeM3=time.time()
@@ -126,7 +126,7 @@ class SRSForm(QtGui.QMainWindow):
             QtGui.qApp.processEvents()
 
 
-            time.sleep(1)
+            time.sleep(0.1)
             #### READ MASS 4  ####
             uf_m4 = float(dataLine[2])
             MeasureTimeM4=time.time()
@@ -137,7 +137,7 @@ class SRSForm(QtGui.QMainWindow):
             QtGui.qApp.processEvents()
 
 
-            time.sleep(1)
+            time.sleep(0.1)
             #### READ MASS 5  ####
             uf_m5 = float(dataLine[3])
             MeasureTimeM5=time.time()
@@ -149,7 +149,7 @@ class SRSForm(QtGui.QMainWindow):
             
 
 
-            time.sleep(1)
+            time.sleep(0.1)
             #### READ MASS 40  ####
             uf_m40 = float(dataLine[4])
             MeasureTimeM40=time.time()
@@ -159,7 +159,7 @@ class SRSForm(QtGui.QMainWindow):
             s5.addPoints(spots40)
             QtGui.qApp.processEvents()
 
-            time.sleep(1)
+            time.sleep(0.1)
             
          
 
@@ -181,6 +181,7 @@ class SRSForm(QtGui.QMainWindow):
         CurTime=time.time()
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(60) #60s second timeout
+        #s.settimeout(1) #60s second timeout
 
         s.connect(('192.168.0.3', 818)) 
 
