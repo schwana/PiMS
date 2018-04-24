@@ -31,33 +31,27 @@ class SRSForm(QtGui.QMainWindow):
       
       #Initialise Clock
       self.tester = QtCore.QTimer(self)
-      self.tester.timeout.connect(self.ReadQMA)
+      self.tester.timeout.connect(self.AttemptReadQMA)
       self.tester.start()
 
-      
-
-    def ReadQMA(self):
-
-
-
+    def AttemptReadQMA(self):
         try:
             print "Connecting to QMA"
-            self.Test()
+            self.RGAConnect()
             print "self.test finished"
         except socket.error, exc:
             print "Caught exception socket.error : %s" % exc
             self.OfflineMode()
             
     def OfflineMode(self):
-        print "Offline Mode"
+
+        print "Offline Mode - using dummy file:"
 
         HomeDir=os.getenv("HOME")
         WorkDir=HomeDir+'/PiMS/DisplaySRS/HeDummy.csv'
         print(WorkDir)
 
         my_data=np.genfromtxt(WorkDir,delimiter=',')
-
-        print len(my_data)
 
         CurTime=time.time()
 
@@ -94,18 +88,24 @@ class SRSForm(QtGui.QMainWindow):
         spots5=[]
         spots40=[]
 
+        outputM1=[]
+        outputM1t=[]
+        outputM3=[]
+        outputM3t=[]
+        outputM4=[]
+        outputM4t=[]
+        outputM5=[]
+        outputM5t=[]
+        outputM40=[]
+        outputM40t=[]
+
+        stepTime=0.5
+
         for x in range (0,len(my_data)):
             #Split the line into masses
             dataLine=my_data[x]
-            print dataLine
-            print len(dataLine)
-
-
+            time.sleep(stepTime)
             
-            
-            time.sleep(0.1)
-
- 
             #### READ MASS 1  ####
             MeasureTimeM1=time.time()
             uf_m1 = float(dataLine[0])
@@ -114,8 +114,9 @@ class SRSForm(QtGui.QMainWindow):
             spots1.append({'pos':(x1,y1)})
             s1.addPoints(spots1)
             QtGui.qApp.processEvents()
-
-            time.sleep(0.1)
+            outputM1.append(uf_m1)
+            outputM1t.append(MeasureTimeM1)
+            time.sleep(stepTime)
             #### READ MASS 3  ####
             uf_m3 = float(dataLine[1])
             MeasureTimeM3=time.time()
@@ -124,9 +125,9 @@ class SRSForm(QtGui.QMainWindow):
             spots3.append({'pos':(x3,y3)})
             s2.addPoints(spots3)
             QtGui.qApp.processEvents()
-
-
-            time.sleep(0.1)
+            outputM3.append(uf_m3)
+            outputM3t.append(MeasureTimeM3)
+            time.sleep(stepTime)
             #### READ MASS 4  ####
             uf_m4 = float(dataLine[2])
             MeasureTimeM4=time.time()
@@ -135,9 +136,9 @@ class SRSForm(QtGui.QMainWindow):
             spots4.append({'pos':(x4,y4)})
             s3.addPoints(spots4)
             QtGui.qApp.processEvents()
-
-
-            time.sleep(0.1)
+            outputM4.append(uf_m4)
+            outputM4t.append(MeasureTimeM4)
+            time.sleep(stepTime)
             #### READ MASS 5  ####
             uf_m5 = float(dataLine[3])
             MeasureTimeM5=time.time()
@@ -146,10 +147,9 @@ class SRSForm(QtGui.QMainWindow):
             spots5.append({'pos':(x5,y5)})
             s4.addPoints(spots5)
             QtGui.qApp.processEvents()
-            
-
-
-            time.sleep(0.1)
+            outputM5.append(uf_m5)
+            outputM5t.append(MeasureTimeM5)
+            time.sleep(stepTime)
             #### READ MASS 40  ####
             uf_m40 = float(dataLine[4])
             MeasureTimeM40=time.time()
@@ -158,30 +158,28 @@ class SRSForm(QtGui.QMainWindow):
             spots40.append({'pos':(x40,y40)})
             s5.addPoints(spots40)
             QtGui.qApp.processEvents()
+            outputM40.append(uf_m40)
+            outputM40t.append(MeasureTimeM40)
+            time.sleep(stepTime)
 
-            time.sleep(0.1)
-            
-         
+        print("Scan Complete")
 
-            
-            
-            
-            
-            
-            #w1.setYRange(-15,-9, 0)
-          
-            
-       
-
+        #Output to file
+        self.outputData(outputM1, outputM1t,
+                        outputM3, outputM3t,
+                        outputM4, outputM4t,
+                        outputM5, outputM5t,
+                        outputM40, outputM40t)
         
+        print len(outputM1)
         sys.exit()
       
 
-    def Test(self):
+    def RGAConnect(self):
         CurTime=time.time()
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(60) #60s second timeout
-        #s.settimeout(1) #60s second timeout
+        s.settimeout(20) #20 second timeout
+        #s.settimeout(1) #1 second timeout
 
         s.connect(('192.168.0.3', 818)) 
 
@@ -244,18 +242,6 @@ class SRSForm(QtGui.QMainWindow):
             spots5=[]
             spots40=[]
                 
-    ##        x =1
-    ##      
-    ##        n = 1
-    ##        s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 255, 255, 120))
-    ##        pos = np.random.normal(size=(2,n), scale=1e-5)
-    ##        
-    ##        print pos
-    ##        spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
-    ##
-    ##        s1.addPoints(spots)
-    ##        w1.addItem(s1)
-    ##        
             #Commands to perform a measurement
             s.send('HV*\r')
             print('HV0')
@@ -273,7 +259,16 @@ class SRSForm(QtGui.QMainWindow):
             time.sleep(5)
             hex_string = s.recv(1024)
 
-            
+            outputM1=[]
+            outputM1t=[]
+            outputM3=[]
+            outputM3t=[]
+            outputM4=[]
+            outputM4t=[]
+            outputM5=[]
+            outputM5t=[]
+            outputM40=[]
+            outputM40t=[]
 
 
             n=1
@@ -290,6 +285,8 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u1=struct.unpack('<i',hex_string)[0]
                     uf_m1=u1*1e-16
+                    outputM1.append(uf_m1)
+                    outputM1t.append(MeasureTimeM1)
                     print('MR1 :', uf_m1)
                     if uf_m1>0:
                         y1=math.log10(uf_m1)
@@ -298,7 +295,6 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 1: ',len(hex_string))
-                    #uf_m1=0.0
                 
 
             #### READ MASS 3  ####
@@ -310,6 +306,8 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u3=struct.unpack('<i',hex_string)[0]
                     uf_m3=u3*1e-16
+                    outputM3.append(uf_m3)
+                    outputM3t.append(MeasureTimeM3)
                     print('MR3 :', uf_m3)
                     if uf_m3>0:
                         y3=math.log10(uf_m3)
@@ -318,8 +316,6 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 3: ',len(hex_string))
-#                    uf_m3=0.0
-
 
             #### READ MASS 4  ####
                 MeasureTimeM4=time.time()
@@ -330,6 +326,8 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u4=struct.unpack('<i',hex_string)[0]
                     uf_m4=u4*1e-16
+                    outputM4.append(uf_m4)
+                    outputM4t.append(MeasureTimeM4)
                     print('MR4 :', uf_m4)
                     if uf_m4>0:
                         y4=math.log10(uf_m4)
@@ -338,7 +336,6 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 4: ',len(hex_string))
-#                    uf_m4=0.0
  
             #### READ MASS 5  ####
                 MeasureTimeM5=time.time()
@@ -349,6 +346,8 @@ class SRSForm(QtGui.QMainWindow):
                 if len(hex_string)==4:
                     u5=struct.unpack('<i',hex_string)[0]
                     uf_m5=u5*1e-16
+                    outputM5.append(uf_m5)
+                    outputM5t.append(MeasureTimeM5)
                     print('MR5 :', uf_m5)
                     if uf_m5>0:
                         y5=math.log10(uf_m5)
@@ -357,7 +356,6 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 5: ',len(hex_string))
-#                    uf_m5=0.0
 
             #### READ MASS 40  ####
                 MeasureTimeM40=time.time()
@@ -370,71 +368,17 @@ class SRSForm(QtGui.QMainWindow):
                     uf_m40=u40*1e-16
                     print('MR40 :', uf_m40)
                     if uf_m40>0:
+                        outputM40.append(uf_m40)
+                        outputM40t.append(MeasureTimeM40)                        
                         y40=math.log10(uf_m40)
                         spots40.append({'pos':(x40,y40)})
                         s40.addPoints(spots40)
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 40: ',len(hex_string))
-                    #uf_m40=0.0
  
                 time.sleep(0.5)
 
-##                #MASS 40
-##                MeasureTime40=time.time()
-##                s.send('MR40 \r')
-##                time.sleep(5)
-##                hex_string = s.recv(1024)
-##                print(repr(hex_string))
-##                if len(hex_string)==4:
-##                    u=struct.unpack('<i',hex_string)[0]
-##                    uf=u*1e-16
-##                    print('MR40 :', uf)
-##                else:
-##                    print('Error Mass 40: ',len(hex_string))
-##                    uf=0.0
-##
-##
-##                #MASS 5
-##                MeasureTime5=time.time()    
-##                s.send('MR5\r')
-##                hex_stringM5 = s.recv(4)
-##                if len(hex_stringM5)==4:
-##                    u5=struct.unpack('<i',hex_stringM5)[0]
-##                    uf5=u5*1e-16
-##                    print('MR5 :', uf5)
-##                else:
-##                    print('Error Mass 5: ',len(hex_stringM5))
-##                    uf5=0.0
-## 
-##                    
-##                time.sleep(0.5)
-##
-##            
-
-##
-##                s1 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(255, 0, 0, 120))
-##                s2 = pg.ScatterPlotItem(size=10, pen=pg.mkPen(None), brush=pg.mkBrush(0, 255, 0, 120))
-##                pos = np.random.normal(size=(2,n), scale=1e-5)
-##                pos2 = np.random.normal(size=(2,n), scale=1e-5)
-##
-##                
-##
-##                pos[0]=MeasureTime40-CurTime
-##                pos2[0]=MeasureTime5-CurTime
-##
-##                if uf>0.0:
-##                    pos[1]=uf
-##                    s1.addPoints(x=pos[0],y=pos[1])
-##                    w1.addItem(s1)
-##                    
-##                if uf5>0.0:
-##                    pos2[1]=uf5
-##                    #s2.addPoints(x=pos2[0],y=pos2[1])
-##                    #w1.addItem(s2)
-                    
-                
-                #w1.setYRange(-15,-9, padding=0)
                 j=j+1
                 print("Step %d" % (j))
               
@@ -443,12 +387,71 @@ class SRSForm(QtGui.QMainWindow):
         s.send('MR0\r')
         print('MR0')
 
+        print("FINISHED - Output to file")
+
+        #Output to file
+        self.outputData(outputM1, outputM1t,
+                        outputM3, outputM3t,
+                        outputM4, outputM4t,
+                        outputM5, outputM5t,
+                        outputM40, outputM40t)
+
         s.close() 
         sys.exit()
+        
+    def outputData(self, M1,M1t,M3,M3t,M4,M4t,M5,M5t,M40,M40t):
+        print("Output Data to File")
+
+        _USERNAME = os.getenv("SUDO_USER") or os.getenv("USER")
+        _HOME = os.path.expanduser('~'+_USERNAME)
+
+        HNum = _HOME+'/PiMS/Hnum.txt'
+
+        #Get current helium run number
+        fo = open(HNum, "r")
+        HeNum = fo.readline()
+        fo.close() 
+
+        FileName = 'He'+HeNum+'.txt'
+
+        WorkDir= _HOME+'/Results/'+FileName
+
+        #Read Inlet Line
+
+        foRun = open(WorkDir,"r")
+        lines = foRun.readlines()
+
+        inletLine = lines[1].split(",")
+        inletTime=float(inletLine[1])
+                
+        foRun.close()
+        #Recalculate inlet times to give absolute values
+        for x in range (0, len(M1)):
+            M1t[x]=float(str(M1t[x]))-inletTime
+            M3t[x]=float(str(M3t[x]))-inletTime
+            M4t[x]=float(str(M4t[x]))-inletTime
+            M5t[x]=float(str(M5t[x]))-inletTime
+            M40t[x]=float(str(M40t[x]))-inletTime
+
+
+        #Re-open file to append times, currents
+        foRun = open(WorkDir,"a")
+
+        #Collected data
+        for x in range (0, len(M1)):
+
+            outputString=(str(M1t[x])+","+str(M1[x])+","+
+                          str(M3t[x])+","+str(M3[x])+","+
+                          str(M4t[x])+","+str(M4[x])+","+
+                          str(M5t[x])+","+str(M5[x])+","+
+                          str(M40t[x])+","+str(M40[x]))
             
+            foRun.write(outputString+'\n')
+
+        foRun.close()
         
         
-    
+        
     
 
 if __name__ == "__main__":

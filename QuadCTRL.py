@@ -102,7 +102,6 @@ class MyForm(QtGui.QMainWindow):
                     except:
                         pass
                 else:
-                    print (cellText.text())
                     if  cellText.text().replace(" ","")=="":
                         self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,255,255))
                         self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(0,0,0))
@@ -239,7 +238,6 @@ class MyForm(QtGui.QMainWindow):
         fo = open("Temperature.txt", "r")
         line = fo.readline()
         degreeChar = u'\N{DEGREE SIGN}'
-  #      print line
         self.ui.labelTemperature.setText("{:.1f}".format(float(line))+degreeChar+"C")
         fo.close()
 
@@ -508,10 +506,9 @@ class MyForm(QtGui.QMainWindow):
         time.sleep(0.5)
         #GPIO signal here
         if self.ui.checkBoxTest.isChecked():
-            print ("TEST POINT - GPIO 6 NOT HIGH")
+            pass
         else:
             GPIO.output(6,GPIO.HIGH)
-            print ("TEST POINT - GPIO 6 HIGH")
         
 
     def v6close(self):
@@ -685,6 +682,7 @@ class MyForm(QtGui.QMainWindow):
 
     def runningPushed(self):
         pass
+    
         
 
 ## -------------- LB, Q, SAMPLE ----------------##
@@ -790,11 +788,8 @@ class MyForm(QtGui.QMainWindow):
     def QuadMeaure(self):
         #Open v8 - Inlet   
         self.v8open()
+        InletTime=time.time()
         self.ui.lblProcess.setText("Inlet and Measure")
-        #wait then start quad
-#        for x in range(0, 60):
-#            self.ui.progressLabel.setText("Time %d" % (x))
-#            time.sleep(1)
         QtGui.qApp.processEvents()
 
 #        self.ui.lblProcess.setText("Start Measurement")
@@ -804,20 +799,20 @@ class MyForm(QtGui.QMainWindow):
         Username = os.getenv("USER")
         #WorkDir='/home/'+Username+'/PiMS/DisplaySRS/SRSRead.py'
 
- 
-
         _USERNAME = os.getenv("SUDO_USER") or os.getenv("USER")
         _HOME = os.path.expanduser('~'+_USERNAME)
 
         WorkDir= _HOME+'/PiMS/DisplaySRS/SRSRead.py'
 
-        print _HOME
-        print(WorkDir)
+        self.CreateRunFile(InletTime)
+
+        print "Quad Measurement Routine Starting"
+        print "Home Directory is"+_HOME
+        print ("SRSRead located at "+WorkDir)
         os.system("python "+WorkDir)
+
+        print "Quad Measurement Routine Complete"
         self.ui.lblProcess.setText("End Measurement")
-    #    for x in range(0, 60):
-    #        self.ui.progressLabel.setText("Time %d" % (x))
-    #        time.sleep(1)
         QtGui.qApp.processEvents()
 
     def LineCleanUp(self):
@@ -847,7 +842,8 @@ class MyForm(QtGui.QMainWindow):
             time.sleep(1)
             QtGui.qApp.processEvents()
         if self.ui.checkBoxTest.isChecked():
-            print "Running In Test Mode - no cleanup on GPIO"
+            pass
+            #print "Running In Test Mode - no cleanup on GPIO"
         else:
             pass
             #GPIO.cleanup()
@@ -928,6 +924,7 @@ class MyForm(QtGui.QMainWindow):
         #show something running
         self.ui.runningButton.setStyleSheet("background-color: orange")
         self.ui.runningButton.setChecked(True)
+        self.ui.descriptionLabel.setText("Line Blank")
         #os.system("python /home/pi/PiMS/DisplaySRS/SRSRead.py")
 
         #Change Button colour
@@ -1046,6 +1043,7 @@ class MyForm(QtGui.QMainWindow):
 
         for j in range (0,self.ui.tableWidgetStandards1.columnCount()):
             cellText=self.ui.tableWidgetStandards1.item(0,j)
+            str_cellText=self.ui.tableWidgetStandards1.item(0,j).text()
             if cellText is None:
                 try:
                     pass
@@ -1055,7 +1053,10 @@ class MyForm(QtGui.QMainWindow):
                 if  cellText.text().replace(" ","")=="":
                     self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,255,255))
                     self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))
-                else:    
+                else:
+                    print str_cellText
+                    self.ui.descriptionLabel.setText(str_cellText)
+
                     print(j)
                     SampleHoleNumber=j+10
                     print ("SampleHoleNumber: ", SampleHoleNumber)
@@ -1069,7 +1070,7 @@ class MyForm(QtGui.QMainWindow):
                     #Re-extract
                     self.ui.tableWidgetStandards1.item(0,j).setBackground(QtGui.QColor(255,165,0))
                     self.ui.tableWidgetStandards1.item(0,j).setForeground(QtGui.QColor(0,0,0))    
-
+                    self.ui.descriptionLabel.setText(str_cellText+" RH")
                     self.ReExtract()
                         
                     #Finished cell - change to red            
@@ -1084,6 +1085,8 @@ class MyForm(QtGui.QMainWindow):
         for i in range (0,self.ui.tableWidgetSamples.rowCount()):
             for j in range (0,self.ui.tableWidgetSamples.columnCount()):
                 cellText=self.ui.tableWidgetSamples.item(i,j)
+                str_cellText=self.ui.tableWidgetSamples.item(0,j).text()
+
                 SampleHoleNumber=SampleHoleNumber+1
                 if cellText is None:
                     try:
@@ -1093,6 +1096,7 @@ class MyForm(QtGui.QMainWindow):
                 else:
                     self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(0,255,255))
                     self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(255,255,255))
+                    self.ui.descriptionLabel.setText(str_cellText)
 
                     #EXTRACT
                     #SampleHoleNumber=(1+i)*(13+j)
@@ -1108,6 +1112,7 @@ class MyForm(QtGui.QMainWindow):
                     #Re-extract
                     self.ui.tableWidgetSamples.item(i,j).setBackground(QtGui.QColor(255,165,0))
                     self.ui.tableWidgetSamples.item(i,j).setForeground(QtGui.QColor(0,0,0))    
+                    self.ui.descriptionLabel.setText(str_cellText+" RH")
 
                     self.ReExtract()
                         
@@ -1140,6 +1145,8 @@ class MyForm(QtGui.QMainWindow):
         #Run Second Set of Standards
         for j in range (0,self.ui.tableWidgetStandards2.columnCount()):
             cellText=self.ui.tableWidgetStandards2.item(0,j)
+            str_cellText=self.ui.tableWidgetStandards2.item(0,j).text()
+
             if cellText is None:
                 try:
                     pass
@@ -1150,7 +1157,8 @@ class MyForm(QtGui.QMainWindow):
                     self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,255,255))
                     self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(0,0,0))
                 else:    
-                    print(j)
+                    self.ui.descriptionLabel.setText(str_cellText)
+
                     SampleHoleNumber=j+62
                     print ("SampleHoleNumber: ", SampleHoleNumber)
                     #Extract
@@ -1163,6 +1171,7 @@ class MyForm(QtGui.QMainWindow):
                     #Re-extract
                     self.ui.tableWidgetStandards2.item(0,j).setBackground(QtGui.QColor(255,165,0))
                     self.ui.tableWidgetStandards2.item(0,j).setForeground(QtGui.QColor(0,0,0))    
+                    self.ui.descriptionLabel.setText(str_cellText+" RH")
 
                     self.ReExtract()
                         
@@ -1182,6 +1191,9 @@ class MyForm(QtGui.QMainWindow):
         self.ui.runningButton.setStyleSheet("background-color: orange")
         self.ui.runningButton.setChecked(True)
 
+        self.ui.descriptionLabel.setText("Standard")
+
+
         #Change Button colour
         self.ui.stdButton.setStyleSheet("background-color: orange")
         self.ui.stdButton.setChecked(True)        
@@ -1196,6 +1208,13 @@ class MyForm(QtGui.QMainWindow):
 
 
         self.PreMeasure()
+
+        fo = open("Qnum.txt", "rw+")
+        QNum = fo.readline()
+        fo.close()
+
+
+        self.ui.descriptionLabel.setText("Q"+QNum)
 
         self.QuadMeaure()
 
@@ -1235,6 +1254,36 @@ class MyForm(QtGui.QMainWindow):
             print "Sample Moved"
         except serial.SerialException, exc:
             print "Arduino error : %s" % exc
+
+    def CreateRunFile(self, InletTime):
+        fo = open("Hnum.txt", "r")
+        HeNum = fo.readline()
+        fo.close()        
+
+        FileName = 'He'+HeNum+'.txt'
+        
+        _USERNAME = os.getenv("SUDO_USER") or os.getenv("USER")
+        _HOME = os.path.expanduser('~'+_USERNAME)
+
+        WorkDir= _HOME+'/Results/'+FileName
+
+        print _HOME
+        print(WorkDir)
+
+        TopLine = self.ui.descriptionLabel.text()
+
+
+        foRun = open(WorkDir,"w+")
+
+        foRun.write(TopLine+'\n')
+        foRun.write("Inlet Time , "+str(InletTime)+'\n')
+        
+
+        foRun.close()
+
+        
+
+        
 
 
 if __name__ == "__main__":
