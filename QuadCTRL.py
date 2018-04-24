@@ -1032,9 +1032,9 @@ class MyForm(QtGui.QMainWindow):
         self.disableSampleHolder()
 
         #Initial LB, Q, LB
-        self.LineBlank()
-        self.QShot()
-        self.LineBlank()
+#        self.LineBlank()
+#        self.QShot()
+#        self.LineBlank()
 
         self.disableButtons()
         
