@@ -243,7 +243,7 @@ class SRSForm(QtGui.QMainWindow):
             spots40=[]
                 
             #Commands to perform a measurement
-            s.send('HV*\r')
+            s.send('HV1000\r')
             print('HV0')
             s.send('NF0\r')
             print('NF0')
@@ -274,7 +274,7 @@ class SRSForm(QtGui.QMainWindow):
             n=1
             time.sleep(1)
             j=0
-            for x in range(0, 3):
+            for x in range(0, 20):
    
             #### READ MASS 1  ####
                 MeasureTimeM1=time.time()
@@ -295,7 +295,9 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 1: ',len(hex_string))
-                
+                s.send('IN0\r')
+                time.sleep(1)
+                print(s.recv(1024))               
 
             #### READ MASS 3  ####
                 MeasureTimeM3=time.time()
@@ -317,6 +319,10 @@ class SRSForm(QtGui.QMainWindow):
                 else:
                     print('Error Mass 3: ',len(hex_string))
 
+                s.send('IN0\r')
+                time.sleep(1)
+                print(s.recv(1024))  
+
             #### READ MASS 4  ####
                 MeasureTimeM4=time.time()
                 s.send('MR4 \r')
@@ -336,7 +342,11 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 4: ',len(hex_string))
- 
+                s.send('IN0\r')
+                time.sleep(1)
+                print(s.recv(1024))  
+
+
             #### READ MASS 5  ####
                 MeasureTimeM5=time.time()
                 s.send('MR5 \r')
@@ -356,7 +366,11 @@ class SRSForm(QtGui.QMainWindow):
                         QtGui.qApp.processEvents()
                 else:
                     print('Error Mass 5: ',len(hex_string))
-
+                    
+                s.send('IN0\r')
+                time.sleep(1)
+                print(s.recv(1024))
+            
             #### READ MASS 40  ####
                 MeasureTimeM40=time.time()
                 s.send('MR40 \r')
@@ -383,7 +397,12 @@ class SRSForm(QtGui.QMainWindow):
                 print("Step %d" % (j))
               
                 QtGui.qApp.processEvents()
+                
+                s.send('IN0\r')
+                time.sleep(1)
+                print(s.recv(1024))
 
+            
         s.send('MR0\r')
         print('MR0')
 
