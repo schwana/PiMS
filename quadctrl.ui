@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>927</width>
-    <height>693</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -442,7 +442,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>15</y>
+      <y>20</y>
       <width>471</width>
       <height>410</height>
      </rect>
@@ -3221,8 +3221,8 @@
     <widget class="QLabel" name="label_10">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>350</y>
+       <x>10</x>
+       <y>10</y>
        <width>59</width>
        <height>21</height>
       </rect>
@@ -3241,7 +3241,7 @@
      <property name="geometry">
       <rect>
        <x>380</x>
-       <y>280</y>
+       <y>10</y>
        <width>85</width>
        <height>61</height>
       </rect>
@@ -3361,6 +3361,126 @@
       <string>TP</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxTest">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>90</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Test</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="runningButton">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>380</y>
+       <width>21</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblProcess">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>380</y>
+       <width>141</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>inactive</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="lcdTime">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>330</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="digitCount">
+      <number>8</number>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+    </widget>
+    <widget class="QDial" name="dialGetter">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>230</y>
+       <width>61</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="value">
+      <number>1</number>
+     </property>
+     <property name="sliderPosition">
+      <number>1</number>
+     </property>
+     <property name="notchesVisible">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>200</y>
+       <width>61</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Gettering</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="getterLabel">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>290</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>1 min</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
     <zorder>line_22</zorder>
     <zorder>line</zorder>
     <zorder>line_2</zorder>
@@ -3406,132 +3526,51 @@
     <zorder>lblHnum</zorder>
     <zorder>label_9</zorder>
     <zorder>label_10</zorder>
-    <zorder>pushButtonAuto</zorder>
     <zorder>labelTemperature</zorder>
     <zorder>label_12</zorder>
     <zorder>label_13</zorder>
     <zorder>label_14</zorder>
     <zorder>label_15</zorder>
     <zorder>label_16</zorder>
-   </widget>
-   <widget class="QDial" name="dialGetter">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>470</y>
-      <width>91</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>100</number>
-    </property>
-    <property name="value">
-     <number>1</number>
-    </property>
-    <property name="sliderPosition">
-     <number>1</number>
-    </property>
-    <property name="notchesVisible">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>450</y>
-      <width>121</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Gettering Time</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="getterLabel">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>550</y>
-      <width>101</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1 min</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <zorder>pushButtonAuto</zorder>
+    <zorder>checkBoxTest</zorder>
+    <zorder>runningButton</zorder>
+    <zorder>lblProcess</zorder>
+    <zorder>lcdTime</zorder>
+    <zorder>dialGetter</zorder>
+    <zorder>label_8</zorder>
+    <zorder>getterLabel</zorder>
    </widget>
    <widget class="QPushButton" name="lbButton">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>450</y>
+      <x>540</x>
+      <y>370</y>
       <width>85</width>
-      <height>51</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Line Blank</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdTime">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>430</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>8</number>
-    </property>
-    <property name="segmentStyle">
-     <enum>QLCDNumber::Flat</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblProcess">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>442</y>
-      <width>141</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>inactive</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="stdButton">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>520</y>
+      <x>540</x>
+      <y>410</y>
       <width>85</width>
-      <height>51</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
@@ -3541,51 +3580,19 @@
    <widget class="QPushButton" name="sampleButton">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>450</y>
-      <width>85</width>
-      <height>51</height>
+      <x>660</x>
+      <y>370</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Sample</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="runningButton">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>438</y>
-      <width>21</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBoxTest">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>450</y>
-      <width>51</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="progressLabel">
@@ -3606,8 +3613,8 @@
      <rect>
       <x>500</x>
       <y>15</y>
-      <width>391</width>
-      <height>410</height>
+      <width>241</width>
+      <height>351</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -3619,8 +3626,8 @@
     <widget class="QTableWidget" name="tableWidgetSamples">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>90</y>
+       <x>20</x>
+       <y>60</y>
        <width>211</width>
        <height>241</height>
       </rect>
@@ -3630,6 +3637,11 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>6</pointsize>
+      </font>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -3965,11 +3977,16 @@
     <widget class="QTableWidget" name="tableWidgetStandards1">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>20</y>
+       <x>60</x>
+       <y>10</y>
        <width>121</width>
        <height>51</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>6</pointsize>
+      </font>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -4016,11 +4033,16 @@
     <widget class="QTableWidget" name="tableWidgetStandards2">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>330</y>
+       <x>60</x>
+       <y>290</y>
        <width>121</width>
        <height>51</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>6</pointsize>
+      </font>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -4071,15 +4093,15 @@
    <widget class="QPushButton" name="runAllButton">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>520</y>
-      <width>85</width>
-      <height>51</height>
+      <x>660</x>
+      <y>410</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
