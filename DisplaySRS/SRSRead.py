@@ -178,8 +178,8 @@ class SRSForm(QtGui.QMainWindow):
     def RGAConnect(self):
         CurTime=time.time()
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(20) #20 second timeout
-        #s.settimeout(1) #1 second timeout
+        #s.settimeout(20) #20 second timeout
+        s.settimeout(1) #1 second timeout
 
         s.connect(('192.168.0.3', 818)) 
 
